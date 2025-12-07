@@ -81,5 +81,17 @@ public class DataRepository {
         flashcardDao.insertFlashcard(flashcard);
     }
 
+    public List<Flashcard> getFlashcardsByCourse(int courseId){
+        return flashcardDao.getFlashcardByCourse(courseId);
+    }
+
+    public Flashcard getFlashcardById(int flashcard){
+        return flashcardDao.getFlashcardById(flashcardById);
+    }
+
+    public void deleteFlashcard(Flashcard flashcard){
+        flashcardDao.deleteFlashcard(flashcard);
+    }
+
 
 }
