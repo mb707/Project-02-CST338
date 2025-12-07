@@ -6,6 +6,8 @@ import com.clevercards.data.AppDatabase;
 import com.clevercards.data.CourseDao;
 import com.clevercards.data.FlashcardDao;
 import com.clevercards.data.UserDao;
+import com.clevercards.data.entities.Course;
+import com.clevercards.data.entities.Flashcard;
 import com.clevercards.data.entities.User;
 
 import java.util.List;
@@ -17,8 +19,8 @@ import java.util.List;
  */
 public class DataRepository {
     private final UserDao userDao;
-    private final CourseDao;
-    private final FlashcardDao;
+    private final CourseDao courseDao;
+    private final FlashcardDao flashcardDao;
 
     //main constructor for receiving the database instance
     public DataRepository(Context context){
@@ -53,11 +55,19 @@ public class DataRepository {
     //ALL THE COURSE METHODS
     //ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ
 
+    public void insertCourse(Course course){
+        courseDao.insertCourse(course);
+    }
+
 
 
     //╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯
     //ALL THE FLASHCARD METHODS
     //ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ
+
+    public void insertFlashcard(Flashcard flashcard){
+        flashcardDao.insertFlashcard(flashcard);
+    }
 
 
 }
