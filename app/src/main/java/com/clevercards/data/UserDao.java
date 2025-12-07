@@ -1,5 +1,9 @@
 package com.clevercards.data;
 
+import androidx.room.OnConflictStrategy;
+import androidx.room.Insert;
+import androidx.room.Query;
+
 import com.clevercards.data.entities.User;
 
 import java.util.List;

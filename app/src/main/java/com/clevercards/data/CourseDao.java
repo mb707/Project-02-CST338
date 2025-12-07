@@ -2,6 +2,9 @@ package com.clevercards.data;
 
 import com.clevercards.data.entities.Course;
 
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
+import androidx.room.Query;
 import java.util.List;
 
 /**
