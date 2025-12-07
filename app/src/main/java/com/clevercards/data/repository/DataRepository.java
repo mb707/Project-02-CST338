@@ -44,7 +44,7 @@ public class DataRepository {
     }
 
     public User getUserById(int userId){
-        return userDao.getUserById();
+        return userDao.getUserById(userId);
     }
 
     public List<User> getAllUsers(){
@@ -63,7 +63,7 @@ public class DataRepository {
         return courseDao.getAllCourses();
     }
 
-    public List<Course> getCourseByUser(int userId){
+    public List<Course> getCoursesByUser(int userId){
         return courseDao.getCoursesByUser(userId);
     }
 
@@ -82,10 +82,10 @@ public class DataRepository {
     }
 
     public List<Flashcard> getFlashcardsByCourse(int courseId){
-        return flashcardDao.getFlashcardByCourse(courseId);
+        return flashcardDao.getFlashcardsByCourse(courseId);
     }
 
-    public Flashcard getFlashcardById(int flashcard){
+    public Flashcard getFlashcardsById(int flashcardById){
         return flashcardDao.getFlashcardById(flashcardById);
     }
 
