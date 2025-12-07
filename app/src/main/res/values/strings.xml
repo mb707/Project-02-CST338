@@ -2,4 +2,7 @@
     <string name="app_name">CleverCards</string>
     <string name="welcome_to_clevercards">Welcome to CleverCards</string>
     <string name="user">User</string>
+    <string name="no_courses_yet">No courses yet. Admin must create a course to get started!</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="course_name">Course Name</string>
 </resources>

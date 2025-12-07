@@ -37,41 +37,31 @@
         app:layout_constraintTop_toTopOf="@id/welcome_TextView"
         app:layout_constraintVertical_bias="0.058" />
 
-    <LinearLayout
-        android:id="@+id/rowTopButtons"
-        android:layout_width="332dp"
-        android:layout_height="96dp"
-        android:layout_marginTop="32dp"
+    <TextView
+        android:id="@+id/noCoursesTextView"
+        android:layout_width="356dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="76dp"
         android:gravity="center"
-        android:orientation="horizontal"
+        android:text="@string/no_courses_yet"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/role_TextView">
+        app:layout_constraintTop_toTopOf="@id/role_TextView" />
 
-        <Button
-            android:id="@+id/btnEng"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginEnd="8dp"
-            android:layout_weight=".5"
-            android:background="@drawable/blue_rounded_button"
-            android:backgroundTint="@null"
-            android:text="ENG\n100"
-            android:textAllCaps="false"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnCst"
-            android:layout_width="0dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="8dp"
-            android:layout_weight=".5"
-            android:background="@drawable/blue_rounded_button"
-            android:text="CST\n100"
-            android:textAllCaps="false"
-            android:textStyle="bold" />
-
-    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/courseRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnSignOut"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/role_TextView"
+        app:layout_constraintVertical_bias="0.105" />
 
     <Button
         android:id="@+id/btnSignOut"
@@ -79,8 +69,7 @@
         android:layout_height="80dp"
         android:layout_marginBottom="80dp"
         android:background="@drawable/blue_rounded_button"
-        android:backgroundTint="@null"
-        android:text="Sign Out"
+        android:text="@string/sign_out"
         android:textAllCaps="false"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
