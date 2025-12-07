@@ -59,6 +59,18 @@ public class DataRepository {
         courseDao.insertCourse(course);
     }
 
+    public List<Course> getAllCourses(){
+        return courseDao.getAllCourses();
+    }
+
+    public List<Course> getCourseByUser(int userId){
+        return courseDao.getCoursesByUser(userId);
+    }
+
+    public Course getCourseById(int courseId){
+        return courseDao.getCourseById(courseId);
+    }
+
 
 
     //╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯
