@@ -1,0 +1,63 @@
+package com.clevercards.data.repository;
+
+import android.content.Context;
+
+import com.clevercards.data.AppDatabase;
+import com.clevercards.data.CourseDao;
+import com.clevercards.data.FlashcardDao;
+import com.clevercards.data.UserDao;
+import com.clevercards.data.entities.User;
+
+import java.util.List;
+
+/**
+ * Name: Morgan Beebe
+ * Date: 2025-12-06
+ * Explanation: class to control my giant data repository
+ */
+public class DataRepository {
+    private final UserDao userDao;
+    private final CourseDao;
+    private final FlashcardDao;
+
+    //main constructor for receiving the database instance
+    public DataRepository(Context context){
+        AppDatabase db = AppDatabase.getInstance(context);
+        this.userDao = db.userDao();
+        this.courseDao = db.courseDao();
+        this.flashcardDao = db.flashcardDao();
+
+    }
+
+    //╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯
+    //ALL THE USER METHODS
+    //ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ
+
+    public void insertUser(User user){
+        userDao.insertUser(user);
+    }
+
+    public User login(String username, String password){
+        return userDao.login(username, password);
+    }
+
+    public User getUserById(int userId){
+        return userDao.getUserById();
+    }
+
+    public List<User> getAllUsers(){
+        return userDao.getAllUsers();
+    }
+
+    //╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯
+    //ALL THE COURSE METHODS
+    //ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ
+
+
+
+    //╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯
+    //ALL THE FLASHCARD METHODS
+    //ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ
+
+
+}
