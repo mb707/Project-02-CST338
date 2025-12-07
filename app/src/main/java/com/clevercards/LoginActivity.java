@@ -7,6 +7,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/*
+ * Author: France Zhang
+ * Created on: 12/6/2025
+ * Description: LoginActivity class
+ */
+
+
 public class LoginActivity extends AppCompatActivity {
 
     private EditText usernameEditText;
