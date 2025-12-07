@@ -3,9 +3,9 @@ package com.clevercards.data.repository;
 import android.content.Context;
 
 import com.clevercards.data.AppDatabase;
-import com.clevercards.data.CourseDao;
-import com.clevercards.data.FlashcardDao;
-import com.clevercards.data.UserDao;
+import com.clevercards.data.dao.CourseDao;
+import com.clevercards.data.dao.FlashcardDao;
+import com.clevercards.data.dao.UserDao;
 import com.clevercards.data.entities.Course;
 import com.clevercards.data.entities.Flashcard;
 import com.clevercards.data.entities.User;

@@ -1,9 +1,13 @@
 package com.clevercards.data;
 
 import android.content.Context;
-import androidx.room.Database;
+
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+
+import com.clevercards.data.dao.CourseDao;
+import com.clevercards.data.dao.FlashcardDao;
+import com.clevercards.data.dao.UserDao;
 
 /**
  * Name: Morgan Beebe

@@ -1,4 +1,4 @@
-package com.clevercards.data;
+package com.clevercards.data.dao;
 
 import androidx.room.Delete;
 import androidx.room.Insert;

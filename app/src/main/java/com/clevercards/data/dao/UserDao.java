@@ -1,5 +1,6 @@
-package com.clevercards.data;
+package com.clevercards.data.dao;
 
+import androidx.room.Dao;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Insert;
 import androidx.room.Query;
@@ -13,6 +14,8 @@ import java.util.List;
  * Date: 2025-12-06
  * Explanation: interface for the user dao
  */
+
+@Dao
 public interface UserDao {
     //add a new user
     @Insert (onConflict = OnConflictStrategy.REPLACE)
@@ -29,5 +32,5 @@ public interface UserDao {
 
     //get a user based on their ID
     @Query ("SELECT * FROM User WHERE userId = :userId LIMIT 1")
-    User getUserId(int userId);
+    User getUserById(int userId);
 }
