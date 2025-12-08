@@ -27,7 +27,6 @@ import com.clevercards.data.entities.User;
         version=1,
         exportSchema=false
 )
-
 public abstract class AppDatabase extends RoomDatabase{
     //DAO Getters
     public abstract UserDao userDao();
