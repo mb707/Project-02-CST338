@@ -22,9 +22,9 @@ public interface UserDao {
     void insertUser(User user);
 
 
-    //login to match username and password
+    //sign in to match username and password
     @Query("SELECT * FROM User WHERE username = :username AND password = :password LIMIT 1")
-    User login(String username, String password);
+    User signin(String username, String password);
 
     //gets a list of all users for admin (maybe include, or save for future)
     @Query("SELECT * FROM User")

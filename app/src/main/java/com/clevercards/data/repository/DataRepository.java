@@ -39,8 +39,8 @@ public class DataRepository {
         userDao.insertUser(user);
     }
 
-    public User login(String username, String password){
-        return userDao.login(username, password);
+    public User signin(String username, String password){
+        return userDao.signin(username, password);
     }
 
     public User getUserById(int userId){
