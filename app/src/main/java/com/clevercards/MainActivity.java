@@ -1,12 +1,14 @@
 package com.clevercards;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -59,11 +61,31 @@ public class MainActivity extends AppCompatActivity {
         binding.btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Signed Out!", Toast.LENGTH_SHORT).show();
+                showSignOutDialog();
             }
         });
+    }
 
+    private void showSignOutDialog(){
+        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
+        final AlertDialog alertDialog = alertBuilder.create();
 
+        alertBuilder.setMessage("Are you sure you want to sign out?");
+        alertBuilder.setPositiveButton("Sign Out", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(MainActivity.this, "Signed out!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                alertDialog.dismiss();
+            }
+        });
+        alertBuilder.setTitle(R.string.confirm_sign_out);
+        alertBuilder.setIcon(R.drawable.baseline_exit_to_app_24);
+        alertBuilder.create().show();
     }
 
     // TODO: implement this when create course logic is complete
