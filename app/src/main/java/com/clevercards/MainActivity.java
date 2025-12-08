@@ -129,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     // Intent factory to be used by other views
     static Intent mainActivityIntentFactory(Context context, int userID){
         Intent intent = new Intent(context, MainActivity.class);
