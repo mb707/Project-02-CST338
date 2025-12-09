@@ -1,4 +1,4 @@
-package com.clevercards;  // make sure this matches your actual package
+package com.clevercards;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-/*
+/**
  * Author: France Zhang
  * Created on: 12/6/2025
  * Description: LoginActivity class

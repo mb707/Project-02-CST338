@@ -20,7 +20,11 @@ import com.clevercards.viewHolders.CourseAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * @author Ashley Wozow
+ * created: 12/6/25
+ * In this MainActivity class, the Dashboard logic is handled.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private static final String MAIN_ACTIVITY_USER_ID = "com.clevercards.MAIN_ACTIVITY_USER_ID";

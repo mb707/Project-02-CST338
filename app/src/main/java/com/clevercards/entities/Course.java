@@ -4,6 +4,11 @@ import androidx.annotation.NonNull;
 
 import java.util.Objects;
 
+/**
+ * @author Ashley Wozow
+ * created: 12/6/25
+ * In this Course class, the logic for Course is handled.
+ */
 //TODO: Add this: @Entity(tableName = CleverCardsDatabase.COURSE_TABLE)
 public class Course {
 
