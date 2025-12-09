@@ -1,14 +1,14 @@
-package com.clevercards.data.repository;
+package com.clevercards.database.repository;
 
 import android.content.Context;
 
-import com.clevercards.data.AppDatabase;
-import com.clevercards.data.dao.CourseDao;
-import com.clevercards.data.dao.FlashcardDao;
-import com.clevercards.data.dao.UserDao;
-import com.clevercards.data.entities.Course;
-import com.clevercards.data.entities.Flashcard;
-import com.clevercards.data.entities.User;
+import com.clevercards.database.AppDatabase;
+import com.clevercards.database.dao.CourseDao;
+import com.clevercards.database.dao.FlashcardDao;
+import com.clevercards.database.dao.UserDao;
+import com.clevercards.entities.Course;
+import com.clevercards.entities.Flashcard;
+import com.clevercards.entities.User;
 
 import java.util.List;
 

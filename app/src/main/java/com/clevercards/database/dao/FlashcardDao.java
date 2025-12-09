@@ -1,4 +1,4 @@
-package com.clevercards.data.dao;
+package com.clevercards.database.dao;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
@@ -6,7 +6,7 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
-import com.clevercards.data.entities.Flashcard;
+import com.clevercards.entities.Flashcard;
 
 import java.util.List;
 

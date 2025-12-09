@@ -1,30 +1,34 @@
 package com.clevercards.entities;
 
 import androidx.annotation.NonNull;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.util.Objects;
 
 /**
- * @author Ashley Wozow
+ * @author Ashley Wozow and Morgan Beebe
  * created: 12/6/25
  * In this Course class, the logic for Course is handled.
  */
-//TODO: Add this: @Entity(tableName = CleverCardsDatabase.COURSE_TABLE)
+
+//(tableName = CleverCardsDatabase.COURSE_TABLE)
+@Entity
 public class Course {
 
     /** Fields */
-    //TODO: Add @PrimaryKey(autoGenerate = true)
-    private int id;
+    @PrimaryKey(autoGenerate = true)
+    private int courseId;
     private String courseName;
     private int numberOfCards;
     private int userId;
 
     /** Constructors */
-    public Course(String courseName, int numberOfCards, int userId){
-        this.courseName = courseName;
-        this.numberOfCards = numberOfCards;
-        this.userId = userId;
-    }
+//    public Course(String courseName, int numberOfCards, int userId){
+//        this.courseName = courseName;
+//        this.numberOfCards = numberOfCards;
+//        this.userId = userId;
+//    }
 
     public Course(String courseName, int numberOfCards){
         this.courseName = courseName;
@@ -32,12 +36,12 @@ public class Course {
     }
 
     /** Getters and Setters */
-    public int getId() {
-        return id;
+    public int getCourseId() {
+        return courseId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
     }
 
     public String getCourseName() {
@@ -69,12 +73,12 @@ public class Course {
     public boolean equals(Object o) {
         if (!(o instanceof Course)) return false;
         Course course = (Course) o;
-        return id == course.id && numberOfCards == course.numberOfCards && userId == course.userId && Objects.equals(courseName, course.courseName);
+        return courseId == course.courseId && numberOfCards == course.numberOfCards && userId == course.userId && Objects.equals(courseName, course.courseName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, courseName, numberOfCards, userId);
+        return Objects.hash(courseId, courseName, numberOfCards, userId);
     }
 
     /** ToString */
@@ -82,7 +86,7 @@ public class Course {
     @Override
     public String toString() {
         return "Course{" +
-                "id=" + id +
+                "id=" + courseId +
                 ", courseName='" + courseName + '\'' +
                 ", numberOfCards=" + numberOfCards +
                 ", userId=" + userId +

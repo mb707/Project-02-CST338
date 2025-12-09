@@ -1,4 +1,4 @@
-package com.clevercards.data;
+package com.clevercards.database;
 
 import android.content.Context;
 
@@ -6,12 +6,12 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
-import com.clevercards.data.dao.CourseDao;
-import com.clevercards.data.dao.FlashcardDao;
-import com.clevercards.data.dao.UserDao;
-import com.clevercards.data.entities.Course;
-import com.clevercards.data.entities.Flashcard;
-import com.clevercards.data.entities.User;
+import com.clevercards.database.dao.CourseDao;
+import com.clevercards.database.dao.FlashcardDao;
+import com.clevercards.database.dao.UserDao;
+import com.clevercards.entities.Course;
+import com.clevercards.entities.Flashcard;
+import com.clevercards.entities.User;
 
 
 
