@@ -1,4 +1,4 @@
-package com.clevercards.data.entities;
+package com.clevercards.entities;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

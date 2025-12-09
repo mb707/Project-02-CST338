@@ -1,6 +1,6 @@
-package com.clevercards.data.dao;
+package com.clevercards.database.dao;
 
-import com.clevercards.data.entities.Course;
+import com.clevercards.entities.Course;
 
 import androidx.room.Dao;
 import androidx.room.Insert;
@@ -24,7 +24,7 @@ public interface CourseDao {
     List<Course> getAllCourses();
 
     //get courses from a specific admin (professor)
-    @Query("SELECT * FROM Course WHERE createdByUserId = :userId")
+    @Query("SELECT * FROM Course WHERE userId = :userId")
     List<Course> getCoursesByUser(int userId);
 
     //get a specific course based on its ID

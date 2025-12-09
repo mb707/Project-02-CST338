@@ -1,11 +1,11 @@
-package com.clevercards.data.dao;
+package com.clevercards.database.dao;
 
 import androidx.room.Dao;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.clevercards.data.entities.User;
+import com.clevercards.entities.User;
 
 import java.util.List;
 
