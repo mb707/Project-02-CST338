@@ -12,6 +12,7 @@
     <string name="enter_password">Enter Password</string>
     <string name="preference_userId_key">PreferenceUserIdKeyCleverCards</string>
     <string name="preference_file_key">daclinkPrefernceFileNameCleverCards</string>
+    <string name="create_course">Create Course</string>
 
 
 </resources>

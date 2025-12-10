@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     private int signedInUserID = -1;
     private static final int SIGNED_OUT = -1;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +96,16 @@ public class MainActivity extends AppCompatActivity {
                         courseRecyclerView.setVisibility(View.VISIBLE);
                     }
                 });
+
+        //TODO: Create buttons for create course
+
+        //Temporarily use the username
+        userName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createCourse();
+            }
+        });
 
         binding.btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -160,7 +171,6 @@ public class MainActivity extends AppCompatActivity {
             this.user = user;
             if (this.user != null) {
                 showUsername();
-//                invalidateOptionsMenu();
             }
         });
     }
@@ -187,38 +197,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // TODO: implement this when create course logic is complete
-    private void createCourse(Course course) {
-        courseList.add(course);
-        refreshCoursesUI();
-    }
-
-    // For testing purposes
-    private void loadFakeCourses() {
-        // TODO: remove when real data is ready and replace with a call from the DB
-        courseList.add(new Course("CST 338", 10));
-        courseList.add(new Course("CST 300", 20));
-        courseList.add(new Course("CST 349", 15));
-//        courseList.add(new Course("CST 364", 25));
-//        courseList.add(new Course("CST 499", 50));
-//        courseList.add(new Course("CST 493", 50));
-//        courseList.add(new Course("CST 492", 50));
-//        courseList.add(new Course("CST 491", 50));
-//        courseList.add(new Course("CST 490", 50));
-//        courseList.add(new Course("CST 495", 50));
-    }
-
-    private void refreshCoursesUI() {
-        if (courseList.isEmpty()) {
-            noCoursesTextView.setVisibility(View.VISIBLE);
-            courseRecyclerView.setVisibility(View.GONE);
-        } else {
-            noCoursesTextView.setVisibility(View.GONE);
-            courseRecyclerView.setVisibility(View.VISIBLE);
-        }
-
-        // ListAdapter wants a new list instance when updating
-        List<Course> copy = new ArrayList<>(courseList);
-        courseAdapter.submitList(copy);
+    private void createCourse() {
+        Intent intent = CreateCourseActivity.createCourseIntentFactory(
+                this,
+                signedInUserID
+        );
+        startActivity(intent);
     }
 
     // TODO: wire this to the flashcard activity
