@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -97,16 +99,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        //TODO: Create buttons for create course
-
-        //Temporarily use the username
-        userName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createCourse();
-            }
-        });
-
         binding.btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(SignInActivity.signInIntentFactory(getApplicationContext()));
     }
 
-    // TODO: implement this when create course logic is complete
     private void createCourse() {
         Intent intent = CreateCourseActivity.createCourseIntentFactory(
                 this,
@@ -214,6 +205,43 @@ public class MainActivity extends AppCompatActivity {
         if (user != null){
             userName.setText(user.getUsername());
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.dashboard_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean isAdmin = user != null && user.isAdmin();
+
+        MenuItem createCourseItem = menu.findItem(R.id.action_create_course);
+        MenuItem viewUsersItem = menu.findItem(R.id.action_view_users);
+
+        if (createCourseItem != null) createCourseItem.setVisible(isAdmin);
+        if (viewUsersItem != null) viewUsersItem.setVisible(isAdmin);
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_create_course) {
+            createCourse();
+            return true;
+
+        } else if (id == R.id.action_view_users) {
+            // TODO: start your ViewUsersActivity
+            // startActivity(ViewUsersActivity.intentFactory(this));
+            Toast.makeText(this, "View Users!", Toast.LENGTH_SHORT).show();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 

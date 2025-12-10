@@ -97,7 +97,9 @@ public class CleverCardsRepository {
     //ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ
 
     public void insertCourse(Course... course){
-        courseDao.insertCourse(course);
+        CleverCardsDatabase.databaseWriteExecutor.execute(() -> {
+            courseDao.insertCourse(course);
+        });
     }
 
     public List<Course> getAllCourses(){
