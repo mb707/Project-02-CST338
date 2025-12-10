@@ -36,12 +36,12 @@ public interface UserDao {
 
     //gets a list of all users for admin (maybe include, or save for future)
     @Query("SELECT * from "+ CleverCardsDatabase.USER_TABLE + " WHERE username == :username")
-    LiveData<List<User>> getUsersByUserName(String username);
+    LiveData<User> getUsersByUserName(String username);
 
     @Query("SELECT * FROM " + CleverCardsDatabase.USER_TABLE + " ORDER BY username")
     LiveData<List<User>> getAllUsers();
 
     //get a user based on their ID
     @Query("SELECT * from "+ CleverCardsDatabase.USER_TABLE + " WHERE userId == :userId")
-    User getUserById(int userId);
+    LiveData<User>  getUserById(int userId);
 }

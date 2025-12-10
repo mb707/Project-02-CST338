@@ -80,7 +80,7 @@ public class CleverCardsRepository {
 //        return userDao.signin(username, password);
 //    }
 
-    public User getUserById(int userId){
+    public LiveData<User>  getUserById(int userId){
         return userDao.getUserById(userId);
     }
 
@@ -88,7 +88,7 @@ public class CleverCardsRepository {
         return userDao.getAllUsers();
     }
 
-    public LiveData<List<User>> getUsersByUserName(String username){
+    public LiveData<User> getUsersByUserName(String username){
         return userDao.getUsersByUserName(username);
     }
 
@@ -110,6 +110,10 @@ public class CleverCardsRepository {
 
     public List<Course> getCourseById(int courseId){
         return courseDao.getCourseById(courseId);
+    }
+
+    public LiveData<List<Course>> getAllCoursesByUserIdLiveData(int loginUserId){
+        return courseDao.getCourseByUserIdLiveData(loginUserId);
     }
 
 
