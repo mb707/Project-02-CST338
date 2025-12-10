@@ -1,8 +1,10 @@
 package com.clevercards.database.dao;
 
+import com.clevercards.database.CleverCardsDatabase;
 import com.clevercards.entities.Course;
 
 import androidx.room.Dao;
+import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
@@ -17,17 +19,22 @@ import java.util.List;
 public interface CourseDao {
     //add new course (only created by awesome admins)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertCourse(Course course);
+    void insertCourse(Course... course);
+
+    @Query("DELETE from " + CleverCardsDatabase.COURSE_TABLE)
+    void deleteAll();
+    @Delete
+    void delete(Course course);
 
     //get all the courses into the system (for students to use)
-    @Query("SELECT * FROM Course")
+    @Query("SELECT * FROM " + CleverCardsDatabase.COURSE_TABLE + " ORDER BY courseName")
     List<Course> getAllCourses();
 
     //get courses from a specific admin (professor)
-    @Query("SELECT * FROM Course WHERE userId = :userId")
+    @Query("SELECT * FROM " + CleverCardsDatabase.COURSE_TABLE + " WHERE userId = :userId")
     List<Course> getCoursesByUser(int userId);
 
     //get a specific course based on its ID
-    @Query("SELECT * FROM Course WHERE courseId = :courseId LIMIT 1")
-    Course getCourseById(int courseId);
+    @Query("SELECT * FROM " + CleverCardsDatabase.COURSE_TABLE + " WHERE courseId = :courseId LIMIT 1")
+    List<Course> getCourseById(int courseId);
 }
