@@ -28,6 +28,8 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final String MAIN_ACTIVITY_USER_ID = "com.clevercards.MAIN_ACTIVITY_USER_ID";
+
+    public static final String TAG = "DAC_CLEVERCARDS";
     private ActivityMainBinding binding;
     private TextView noCoursesTextView;
     private CourseAdapter courseAdapter;

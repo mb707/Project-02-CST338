@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.clevercards.database.CleverCardsDatabase;
+
 import java.util.Objects;
 
 /**
@@ -12,8 +14,7 @@ import java.util.Objects;
  * In this Course class, the logic for Course is handled.
  */
 
-//(tableName = CleverCardsDatabase.COURSE_TABLE)
-@Entity
+@Entity(tableName = CleverCardsDatabase.COURSE_TABLE)
 public class Course {
 
     /** Fields */

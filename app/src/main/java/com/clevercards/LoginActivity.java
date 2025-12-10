@@ -7,6 +7,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.clevercards.database.CleverCardsDatabase;
+import com.clevercards.database.repository.CleverCardsRepository;
+
 /**
  * Author: France Zhang
  * Created on: 12/6/2025
@@ -20,10 +23,14 @@ public class LoginActivity extends AppCompatActivity {
     private EditText passwordEditText;
     private Button loginButton;
 
+    private CleverCardsRepository repository;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        repository = CleverCardsRepository.getRepository(getApplication());
 
         usernameEditText = findViewById(R.id.usernameEditText);
         passwordEditText = findViewById(R.id.passwordEditText);
