@@ -6,4 +6,13 @@
     <string name="sign_out">Sign Out</string>
     <string name="course_name">Course Name</string>
     <string name="confirm_sign_out">Confirm Sign Out</string>
+    <string name="sign_in">Sign In</string>
+    <string name="create_account">Create Account</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="preference_userId_key">PreferenceUserIdKeyCleverCards</string>
+    <string name="preference_file_key">daclinkPrefernceFileNameCleverCards</string>
+    <string name="create_course">Create Course</string>
+
+
 </resources>

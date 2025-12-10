@@ -3,6 +3,7 @@ package com.clevercards.database.dao;
 import com.clevercards.database.CleverCardsDatabase;
 import com.clevercards.entities.Course;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -37,4 +38,7 @@ public interface CourseDao {
     //get a specific course based on its ID
     @Query("SELECT * FROM " + CleverCardsDatabase.COURSE_TABLE + " WHERE courseId = :courseId LIMIT 1")
     List<Course> getCourseById(int courseId);
+
+    @Query("SELECT * FROM " + CleverCardsDatabase.COURSE_TABLE +" WHERE userId = :signedInId ORDER BY courseName DESC")
+    LiveData<List<Course>> getCourseByUserIdLiveData(int signedInId);
 }
