@@ -52,7 +52,7 @@
     <Button
         android:id="@+id/next_Button"
         android:layout_width="123dp"
-        android:layout_height="75dp"
+        android:layout_height="80dp"
         android:layout_marginTop="128dp"
         android:background="@drawable/blue_rounded_button"
         android:text="@string/next"
@@ -68,7 +68,7 @@
     <Button
         android:id="@+id/back_Button"
         android:layout_width="123dp"
-        android:layout_height="75dp"
+        android:layout_height="80dp"
         android:layout_marginTop="128dp"
         android:layout_marginBottom="34dp"
         android:background="@drawable/blue_rounded_button"

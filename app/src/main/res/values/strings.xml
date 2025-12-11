@@ -18,6 +18,7 @@
     <string name="next">Next</string>
     <string name="back">Back</string>
     <string name="view_users">View Users</string>
+    <string name="edit_users">Edit Users</string>
 
 
 </resources>

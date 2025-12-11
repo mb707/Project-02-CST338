@@ -76,10 +76,6 @@ public class CleverCardsRepository {
         userDao.insertUser(user);
     }
 
-//    public User signin(String username, String password){
-//        return userDao.signin(username, password);
-//    }
-
     public LiveData<User>  getUserById(int userId){
         return userDao.getUserById(userId);
     }

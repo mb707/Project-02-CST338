@@ -218,10 +218,10 @@ public class MainActivity extends AppCompatActivity {
         boolean isAdmin = user != null && user.isAdmin();
 
         MenuItem createCourseItem = menu.findItem(R.id.action_create_course);
-        MenuItem viewUsersItem = menu.findItem(R.id.action_view_users);
+        MenuItem editUsersItem = menu.findItem(R.id.action_edit_users);
 
         if (createCourseItem != null) createCourseItem.setVisible(isAdmin);
-        if (viewUsersItem != null) viewUsersItem.setVisible(isAdmin);
+        if (editUsersItem != null) editUsersItem.setVisible(isAdmin);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -234,10 +234,9 @@ public class MainActivity extends AppCompatActivity {
             createCourse();
             return true;
 
-        } else if (id == R.id.action_view_users) {
-            // TODO: start your ViewUsersActivity
-            // startActivity(ViewUsersActivity.intentFactory(this));
-            Toast.makeText(this, "View Users!", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.action_edit_users) {
+            Intent intent = EditUsersActivity.editUsersIntentFactory(this, signedInUserID);
+            startActivity(intent);
             return true;
         }
 
