@@ -23,8 +23,8 @@ import com.clevercards.database.repository.CleverCardsRepository;
 import com.clevercards.databinding.ActivityMainBinding;
 import com.clevercards.entities.Course;
 import com.clevercards.entities.User;
-import com.clevercards.viewHolders.CourseAdapter;
-import com.clevercards.viewHolders.CourseViewModel;
+import com.clevercards.viewHolders.course.CourseAdapter;
+import com.clevercards.viewHolders.course.CourseViewModel;
 
 import java.util.ArrayList;
 import java.util.List;

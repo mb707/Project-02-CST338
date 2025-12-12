@@ -73,8 +73,17 @@ public class CleverCardsRepository {
     //ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ
 
     public void insertUser(User... user){
-        userDao.insertUser(user);
+        CleverCardsDatabase.databaseWriteExecutor.execute(() -> {
+            userDao.insertUser(user);
+        });
     }
+
+    public void deleteUser(User user) {
+        CleverCardsDatabase.databaseWriteExecutor.execute(() -> {
+            userDao.delete(user);
+        });
+    }
+
 
     public LiveData<User>  getUserById(int userId){
         return userDao.getUserById(userId);

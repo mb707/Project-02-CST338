@@ -18,7 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.clevercards.database.repository.CleverCardsRepository;
 import com.clevercards.databinding.ActivityCreateCourseBinding;
 import com.clevercards.entities.Course;
-import com.clevercards.viewHolders.CourseViewModel;
+import com.clevercards.viewHolders.course.CourseViewModel;
 
 /**
  * @author Ashley Wozow

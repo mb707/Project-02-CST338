@@ -1,4 +1,4 @@
-package com.clevercards.viewHolders;
+package com.clevercards.viewHolders.course;
 
 import android.view.LayoutInflater;
 import android.view.View;

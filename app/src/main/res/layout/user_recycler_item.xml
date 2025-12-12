@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+android:layout_width="match_parent"
+android:layout_height="wrap_content"
+android:layout_marginBottom="8dp"
+app:cardCornerRadius="12dp"
+app:cardUseCompatPadding="true"
+app:cardElevation="4dp">
+
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="12dp">
+
+    <TextView
+        android:id="@+id/username_TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="username"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="#F6208EDB"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/cbSelectedUser"
+        app:layout_constraintHorizontal_bias="0"
+        android:layout_marginEnd="8dp" />
+
+    <TextView
+        android:id="@+id/userRole_TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Role: user"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:textStyle="italic"
+        app:layout_constraintTop_toBottomOf="@id/username_TextView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/cbSelectedUser"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp" />
+
+    <CheckBox
+        android:id="@+id/cbSelectedUser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="8dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
