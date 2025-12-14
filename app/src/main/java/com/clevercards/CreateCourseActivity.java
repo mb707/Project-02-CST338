@@ -59,7 +59,7 @@ public class CreateCourseActivity extends AppCompatActivity {
         //TODO: once flashcard activity is made, wire this there
     }
 
-    private void signOut() {
+    //private void signOut() {
        //TODO: wire this to sign in page
     }
 
