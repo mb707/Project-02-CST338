@@ -1,7 +1,11 @@
-package com.clevercards.data.entities;
+package com.clevercards.entities;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import com.clevercards.database.CleverCardsDatabase;
+
+import java.util.Objects;
 
 /**
  * Name: Morgan Beebe
@@ -9,7 +13,7 @@ import androidx.room.PrimaryKey;
  * Explanation: user entity for the room database
  */
 
-@Entity
+@Entity(tableName = CleverCardsDatabase.USER_TABLE)
 public class User {
 
     @PrimaryKey(autoGenerate = true)
@@ -62,5 +66,17 @@ public class User {
 
     public void setAdmin(boolean admin) {
         isAdmin = admin;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return userId == user.userId && isAdmin == user.isAdmin && Objects.equals(username, user.username) && Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(userId, username, password, isAdmin);
     }
 }

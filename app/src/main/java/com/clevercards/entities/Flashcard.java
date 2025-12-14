@@ -1,7 +1,9 @@
-package com.clevercards.data.entities;
+package com.clevercards.entities;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import com.clevercards.database.CleverCardsDatabase;
 
 /**
  * Name: Morgan Beebe
@@ -10,7 +12,7 @@ import androidx.room.PrimaryKey;
  * stores all my front and back text and course it belongs to.
  */
 
-@Entity
+@Entity(tableName = CleverCardsDatabase.FLASHCARD_TABLE)
 public class Flashcard {
     @PrimaryKey(autoGenerate = true)
     private int flashcardId;
