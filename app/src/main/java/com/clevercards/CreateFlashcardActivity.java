@@ -9,14 +9,18 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.clevercards.database.repository.CleverCardsRepository;
 import com.clevercards.entities.Flashcard;
+
+
 
 public class CreateFlashcardActivity extends AppCompatActivity {
 
     private EditText frontTextEdit;
     private EditText backTextEdit;
 
-    //private DataRepository repository;
+    private CleverCardsRepository repository;
+
 
     private int courseId; // passed from CreateCourseActivity
 
@@ -26,7 +30,8 @@ public class CreateFlashcardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_flashcard);
 
         // Repo
-        //repository = new DataRepository(this);
+        repository = CleverCardsRepository.getRepository(getApplication());
+
 
         // Get courseId from the intent
         courseId = getIntent().getIntExtra("courseId", -1);
@@ -68,7 +73,7 @@ public class CreateFlashcardActivity extends AppCompatActivity {
         }
 
         Flashcard flashcard = new Flashcard(courseId, front, back);
-        //repository.insertFlashcard(flashcard);
+        repository.insertFlashcard(flashcard);
 
         Toast.makeText(this, "Flashcard saved!", Toast.LENGTH_SHORT).show();
 
