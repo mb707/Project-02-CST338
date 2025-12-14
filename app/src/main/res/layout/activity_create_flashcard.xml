@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/createFlashcardLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CreateFlashcardActivity">
+
+    <!-- TITLE -->
+    <TextView
+        android:id="@+id/createFlashcard_Title"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:text="Create Flashcard"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_margin="24dp" />
+
+    <!-- FRONT TEXT -->
+    <EditText
+        android:id="@+id/frontTextEdit"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/rounded_edittext"
+        android:hint="Enter Front Text"
+        android:padding="16dp"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/createFlashcard_Title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="32dp" />
+
+    <!-- BACK TEXT -->
+    <EditText
+        android:id="@+id/backTextEdit"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/rounded_edittext"
+        android:hint="Enter Back Text"
+        android:padding="16dp"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/frontTextEdit"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginHorizontal="32dp" />
+
+    <!-- NEXT BUTTON -->
+    <Button
+        android:id="@+id/nextFlashcardButton"
+        android:layout_width="140dp"
+        android:layout_height="75dp"
+        android:layout_marginTop="48dp"
+        android:background="@drawable/blue_rounded_button"
+        android:text="Next"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/backTextEdit"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- DASHBOARD BUTTON -->
+    <Button
+        android:id="@+id/dashboardButton"
+        android:layout_width="140dp"
+        android:layout_height="75dp"
+        android:background="@drawable/blue_rounded_button"
+        android:text="Dashboard"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBotto
+        tools:layout_editor_absoluteX="136dp"
+        tools:layout_editor_absoluteY="416dp"
