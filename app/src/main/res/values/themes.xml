@@ -1,9 +1,22 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Base.Theme.CleverCards" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Theme.CleverCards" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorPrimary">#F6208EDB</item>
+        <!-- Use our custom action bar style -->
+        <item name="actionBarStyle">@style/CleverCards.ActionBar</item>
     </style>
 
-    <style name="Theme.CleverCards" parent="Base.Theme.CleverCards" />
+    <!-- Custom ActionBar style -->
+    <style name="CleverCards.ActionBar" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <!-- Title text appearance -->
+        <item name="titleTextStyle">@style/CleverCards.ActionBar.TitleText</item>
+    </style>
+
+    <!-- Title text style -->
+    <style name="CleverCards.ActionBar.TitleText"
+        parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>

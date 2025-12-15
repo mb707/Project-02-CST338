@@ -1,4 +1,4 @@
-package com.clevercards.viewHolders;
+package com.clevercards.viewHolders.course;
 
 import android.app.Application;
 
@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
+import com.clevercards.database.dao.CourseDao;
 import com.clevercards.database.repository.CleverCardsRepository;
 import com.clevercards.entities.Course;
 
@@ -22,6 +23,14 @@ public class CourseViewModel extends AndroidViewModel {
 
     public LiveData<List<Course>> getAllCoursesByUserId(int userId) {
         return repository.getAllCoursesByUserIdLiveData(userId);
+    }
+
+    public LiveData<List<Course>> getAllCoursesLD() {
+        return repository.getAllCoursesLD();
+    }
+
+    public void update(Course course) {
+        repository.updateCourse(course);
     }
 
     public void insert(Course course) {

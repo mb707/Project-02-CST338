@@ -24,13 +24,7 @@ public class Course {
     private int numberOfCards;
     private int userId;
 
-    /** Constructors */
-//    public Course(String courseName, int numberOfCards, int userId){
-//        this.courseName = courseName;
-//        this.numberOfCards = numberOfCards;
-//        this.userId = userId;
-//    }
-
+    /** Constructor */
     public Course(String courseName, int numberOfCards){
         this.courseName = courseName;
         this.numberOfCards = numberOfCards;

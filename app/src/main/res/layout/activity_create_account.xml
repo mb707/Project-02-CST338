@@ -10,7 +10,7 @@
     android:paddingEnd="24dp"
     android:paddingBottom="24dp"
     android:clipToPadding="false"
-    tools:context=".MainActivity">
+    tools:context=".CreateAccountActivity">
 
     <TextView
         android:id="@+id/welcome_TextView"
@@ -27,60 +27,52 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.046" />
 
-
-    <TextView
-        android:id="@+id/role_TextView"
-        android:layout_width="325dp"
-        android:layout_height="60dp"
-        android:layout_marginTop="4dp"
-        android:gravity="center"
-        android:text="@string/user"
-        android:textColor="@color/black"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <EditText
+        android:id="@+id/createUsername_TextView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:hint="@string/create_username"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/welcome_TextView"
-        app:layout_constraintVertical_bias="0.058" />
+        app:layout_constraintTop_toBottomOf="@id/welcome_TextView" />
 
-    <TextView
-        android:id="@+id/noCoursesTextView"
+    <EditText
+        android:id="@+id/createPasswordEditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:hint="@string/create_password"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/createUsername_TextView" />
+
+    <androidx.appcompat.widget.SwitchCompat
+        android:id="@+id/adminSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="76dp"
-        android:gravity="center"
-        android:text="@string/no_courses_yet"
-        android:textSize="18sp"
-        android:textStyle="italic"
-        android:visibility="gone"
+        android:layout_marginTop="28dp"
+        android:text="@string/administrator"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/role_TextView" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/courseRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="32dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnSignOut"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/role_TextView"
-        app:layout_constraintVertical_bias="0.105" />
+        app:layout_constraintTop_toBottomOf="@id/createPasswordEditText" />
 
     <Button
-        android:id="@+id/btnSignOut"
+        android:id="@+id/signInButton"
         android:layout_width="280dp"
         android:layout_height="80dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginTop="136dp"
         android:background="@drawable/blue_rounded_button"
-        android:text="@string/sign_out"
-        android:textAllCaps="false"
+        android:text="@string/sign_in"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/createPasswordEditText" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
