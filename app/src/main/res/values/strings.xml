@@ -22,6 +22,8 @@
     <string name="administrator">Administrator</string>
     <string name="create_password">Create Password</string>
     <string name="create_username">Create Username</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="enter_back_text">Enter Back Text</string>
 
 
 </resources>

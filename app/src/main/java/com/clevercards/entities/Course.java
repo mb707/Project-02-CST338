@@ -30,6 +30,12 @@ public class Course {
         this.numberOfCards = numberOfCards;
     }
 
+    // public Course(String courseName, int numberOfCards, int userId) {
+    //        this.courseName = courseName;
+    //        this.numberOfCards = numberOfCards;
+    //        this.userId = userId;
+    //    }
+
     /** Getters and Setters */
     public int getCourseId() {
         return courseId;
