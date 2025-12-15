@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.room.Insert;
 import androidx.room.vo.Warning;
 
 import com.clevercards.database.CleverCardsDatabase;
@@ -29,6 +30,11 @@ import com.clevercards.viewHolders.user.UserViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Ashley Wozow
+ * created: 12/9/25
+ * In this Edit Users Activity, the logic for adding/deleting and assign courses to users is handled.
+ */
 public class EditUsersActivity extends AppCompatActivity {
 
     private static final String EDIT_USERS_USER_ID =
@@ -110,6 +116,9 @@ public class EditUsersActivity extends AppCompatActivity {
     private void addUser(){
         selectedUser = null;
         userAdapter.setSelectedUserId(-1);
+        Intent intent = CreateAccountActivity.createUsersIntentFactory(this,userId);
+        intent.putExtra(EDIT_USERS_USER_ID, userId);
+        startActivity(intent);
         Toast.makeText(this, "Add user clicked", Toast.LENGTH_SHORT).show();
     }
 

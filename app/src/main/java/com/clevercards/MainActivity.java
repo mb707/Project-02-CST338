@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         alertBuilder.setTitle(R.string.confirm_sign_out);
-        alertBuilder.setIcon(R.drawable.baseline_exit_to_app_24);
+        alertBuilder.setIcon(R.drawable.sign_out_icon);
         alertBuilder.create().show();
     }
 

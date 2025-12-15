@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,7 +27,6 @@ public class SignInActivity extends AppCompatActivity {
     private EditText usernameEditText;
     private EditText passwordEditText;
     private Button signInButton;
-
     private ActivitySignInBinding binding;
 
     private CleverCardsRepository repository;
@@ -47,6 +47,15 @@ public class SignInActivity extends AppCompatActivity {
         signInButton.setOnClickListener(v -> {
             verifyUser();
         });
+
+        binding.createAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                createAccountActivity();
+            }
+        });
+
+
     }
 
     private void verifyUser() {
@@ -86,6 +95,11 @@ public class SignInActivity extends AppCompatActivity {
                 binding.usernameEditText.setSelection(0);
             }
         });
+    }
+
+    private void createAccountActivity(){
+        Intent intent = CreateAccountActivity.createUsersIntentFactory(this, -1);
+        startActivity(intent);
     }
 
     private void toastMaker(String message) {

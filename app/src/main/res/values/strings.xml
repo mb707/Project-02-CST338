@@ -19,6 +19,9 @@
     <string name="back">Back</string>
     <string name="view_users">View Users</string>
     <string name="edit_users">Edit Users</string>
+    <string name="administrator">Administrator</string>
+    <string name="create_password">Create Password</string>
+    <string name="create_username">Create Username</string>
 
 
 </resources>
