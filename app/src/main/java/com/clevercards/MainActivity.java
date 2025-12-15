@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -35,194 +36,137 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private static final String MAIN_ACTIVITY_USER_ID = "com.clevercards.MAIN_ACTIVITY_USER_ID";
-
-    static final String SAVED_INSTANCE_STATE_USERID_KEY = "com.clevercards.SAVED_INSTANCE_STATE_USERID_KEY";
-
-
-    public static final String TAG = "DAC_CLEVERCARDS";
-    private ActivityMainBinding binding;
-    private TextView noCoursesTextView;
-    private TextView userName;
-    private CourseAdapter courseAdapter;
-    private RecyclerView courseRecyclerView;
-    private CleverCardsRepository repository;
-    private CourseViewModel courseViewModel;
-    private final List<Course> courseList = new ArrayList<>();
-
-    private User user;
-    private int signedInUserID = -1;
+    private static final String SAVED_INSTANCE_STATE_USERID_KEY = "com.clevercards.SAVED_INSTANCE_STATE_USERID_KEY";
     private static final int SIGNED_OUT = -1;
 
+    private ActivityMainBinding binding;
+    private CleverCardsRepository repository;
+    private CourseAdapter courseAdapter;
+
+    private User user;
+    private int signedInUserID = SIGNED_OUT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         repository = CleverCardsRepository.getRepository(getApplication());
-        courseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
-
-        noCoursesTextView = findViewById(R.id.noCoursesTextView);
-        courseRecyclerView = findViewById(R.id.courseRecyclerView);
-        userName = findViewById(R.id.role_TextView);
+        CourseViewModel courseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
 
         signInUser(savedInstanceState);
-        if (signedInUserID == SIGNED_OUT){
-            Intent intent = SignInActivity.signInIntentFactory(this);
-            startActivity(intent);
+
+        if (signedInUserID == SIGNED_OUT) {
+            startActivity(SignInActivity.signInIntentFactory(this));
             finish();
             return;
         }
 
-        // 2 columns grid
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
-        courseRecyclerView.setLayoutManager(layoutManager);
-        // Create adapter with empty list initially
-        courseAdapter = new CourseAdapter(new CourseAdapter.CourseDiff(), course -> {
-            // Handle click on a course tile
-            courseToFlashcards(course);
-        });
-        courseRecyclerView.setAdapter(courseAdapter);
+        // Setup RecyclerView
+        binding.courseRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        courseAdapter = new CourseAdapter(new CourseAdapter.CourseDiff(), this::courseToFlashcards);
+        binding.courseRecyclerView.setAdapter(courseAdapter);
 
         courseViewModel.getAllCoursesByUserId(signedInUserID)
                 .observe(this, courses -> {
                     courseAdapter.submitList(courses);
                     if (courses == null || courses.isEmpty()) {
-                        noCoursesTextView.setVisibility(View.VISIBLE);
-                        courseRecyclerView.setVisibility(View.GONE);
+                        binding.noCoursesTextView.setVisibility(android.view.View.VISIBLE);
+                        binding.courseRecyclerView.setVisibility(android.view.View.GONE);
                     } else {
-                        noCoursesTextView.setVisibility(View.GONE);
-                        courseRecyclerView.setVisibility(View.VISIBLE);
+                        binding.noCoursesTextView.setVisibility(android.view.View.GONE);
+                        binding.courseRecyclerView.setVisibility(android.view.View.VISIBLE);
                     }
                 });
 
-        //TODO: Create buttons for create course
-
-        //Temporarily use the username
-        userName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createCourse();
-            }
+        // Create Course button
+        binding.createCourseButton.setOnClickListener(v -> {
+            Intent intent = CreateCourseActivity.createCourseIntentFactory(this, signedInUserID);
+            startActivity(intent);
         });
 
-        binding.btnSignOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showSignOutDialog();
-            }
+        // View Flashcards button
+        binding.viewFlashcardsButton.setOnClickListener(v -> {
+            Intent intent = ViewFlashcardsActivity.intentFactory(this, signedInUserID);
+            startActivity(intent);
         });
+
+        // Sign out
+        binding.btnSignOut.setOnClickListener(v -> showSignOutDialog());
     }
 
-    private void showSignOutDialog(){
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
-        final AlertDialog alertDialog = alertBuilder.create();
-
-        alertBuilder.setMessage("Are you sure you want to sign out?");
-        alertBuilder.setPositiveButton("Sign Out", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                signOut();
-                Toast.makeText(MainActivity.this, "Signed out!", Toast.LENGTH_SHORT).show();
-            }
-        });
-        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                alertDialog.dismiss();
-            }
-        });
-        alertBuilder.setTitle(R.string.confirm_sign_out);
-        alertBuilder.setIcon(R.drawable.baseline_exit_to_app_24);
-        alertBuilder.create().show();
-    }
-
-    //Sign in the user logic below
     private void signInUser(Bundle savedInstanceState) {
-        // check shared preference for logged in user
-        SharedPreferences sharedPreferences = getSharedPreferences(
-                getString(R.string.preference_file_key),
-                Context.MODE_PRIVATE
-        );
-        signedInUserID = sharedPreferences.getInt(getString(R.string.preference_userId_key), SIGNED_OUT);
-        if (signedInUserID == SIGNED_OUT &&
-                savedInstanceState != null &&
-                savedInstanceState.containsKey(SAVED_INSTANCE_STATE_USERID_KEY)) {
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE);
+        signedInUserID = prefs.getInt(getString(R.string.preference_userId_key), SIGNED_OUT);
 
-            signedInUserID = savedInstanceState.getInt(
-                    SAVED_INSTANCE_STATE_USERID_KEY,
-                    SIGNED_OUT
-            );
+        if (signedInUserID == SIGNED_OUT && savedInstanceState != null) {
+            signedInUserID = savedInstanceState.getInt(SAVED_INSTANCE_STATE_USERID_KEY, SIGNED_OUT);
         }
+
         if (signedInUserID == SIGNED_OUT) {
-            signedInUserID = getIntent().getIntExtra(
-                    MAIN_ACTIVITY_USER_ID,
-                    SIGNED_OUT
-            );
+            signedInUserID = getIntent().getIntExtra(MAIN_ACTIVITY_USER_ID, SIGNED_OUT);
         }
-        if (signedInUserID == SIGNED_OUT) {
-            return;
-        }
-        updatedSharedPreference();
-        LiveData<User> userObserver =
-                repository.getUserById(signedInUserID);
-        userObserver.observe(this, user -> {
+
+        if (signedInUserID == SIGNED_OUT) return;
+
+        updateSharedPreference();
+
+        repository.getUserById(signedInUserID).observe(this, user -> {
             this.user = user;
-            if (this.user != null) {
-                showUsername();
+
+            if (user != null) {
+                binding.roleTextView.setText(user.getUsername());
+
+                // Admin-only visibility
+                if (user.isAdmin()) {
+                    binding.createCourseButton.setVisibility(android.view.View.VISIBLE);
+                    binding.viewFlashcardsButton.setVisibility(android.view.View.VISIBLE);
+                } else {
+                    binding.createCourseButton.setVisibility(android.view.View.GONE);
+                    binding.viewFlashcardsButton.setVisibility(android.view.View.GONE);
+                }
             }
         });
     }
 
-    @Override
-    protected void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putInt(SAVED_INSTANCE_STATE_USERID_KEY, signedInUserID);
-        updatedSharedPreference();
+    private void updateSharedPreference() {
+        SharedPreferences prefs = getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE);
+        prefs.edit().putInt(getString(R.string.preference_userId_key), signedInUserID).apply();
     }
 
-    private void updatedSharedPreference(){
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.preference_file_key), Context.MODE_PRIVATE);
-        SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
-        sharedPrefEditor.putInt(getString(R.string.preference_userId_key), signedInUserID);
-        sharedPrefEditor.apply();
+    private void showSignOutDialog() {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.confirm_sign_out)
+                .setMessage("Are you sure you want to sign out?")
+                .setPositiveButton("Sign Out", (dialog, which) -> {
+                    signOut();
+                    Toast.makeText(this, "Signed out!", Toast.LENGTH_SHORT).show();
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 
     private void signOut() {
         signedInUserID = SIGNED_OUT;
-        updatedSharedPreference();
-        getIntent().putExtra(MAIN_ACTIVITY_USER_ID, SIGNED_OUT);
-        startActivity(SignInActivity.signInIntentFactory(getApplicationContext()));
+        updateSharedPreference();
+        startActivity(SignInActivity.signInIntentFactory(this));
+        finish();
     }
 
-    // TODO: implement this when create course logic is complete
-    private void createCourse() {
-        Intent intent = CreateCourseActivity.createCourseIntentFactory(
+    private void courseToFlashcards(Course course) {
+        Intent intent = CreateFlashcardActivity.createFlashcardIntentFactory(
                 this,
+                course.getCourseId(),
                 signedInUserID
         );
         startActivity(intent);
     }
 
-    // TODO: wire this to the flashcard activity
-    private void courseToFlashcards(Course course) {
-        Toast.makeText(this, course.getCourseName(), Toast.LENGTH_SHORT).show();
-    }
-
-    private void showUsername(){
-        if (user != null){
-            userName.setText(user.getUsername());
-        }
-    }
-
-
-    // Intent factory to be used by other views
-    static Intent mainActivityIntentFactory(Context context, int userID){
+    static Intent mainActivityIntentFactory(Context context, int userID) {
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra(MAIN_ACTIVITY_USER_ID, userID);
         return intent;
     }
-
-
 }

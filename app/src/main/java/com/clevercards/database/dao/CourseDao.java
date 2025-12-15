@@ -18,27 +18,27 @@ import java.util.List;
  */
 @Dao
 public interface CourseDao {
-    //add new course (only created by awesome admins)
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertCourse(Course... course);
 
-    @Query("DELETE from " + CleverCardsDatabase.COURSE_TABLE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    long insertCourse(Course course);
+
+    @Query("DELETE FROM " + CleverCardsDatabase.COURSE_TABLE)
     void deleteAll();
+
     @Delete
     void delete(Course course);
 
-    //get all the courses into the system (for students to use)
     @Query("SELECT * FROM " + CleverCardsDatabase.COURSE_TABLE + " ORDER BY courseName")
     List<Course> getAllCourses();
 
-    //get courses from a specific admin (professor)
     @Query("SELECT * FROM " + CleverCardsDatabase.COURSE_TABLE + " WHERE userId = :userId")
     List<Course> getCoursesByUser(int userId);
 
-    //get a specific course based on its ID
     @Query("SELECT * FROM " + CleverCardsDatabase.COURSE_TABLE + " WHERE courseId = :courseId LIMIT 1")
-    List<Course> getCourseById(int courseId);
+    Course getCourseById(int courseId);
 
-    @Query("SELECT * FROM " + CleverCardsDatabase.COURSE_TABLE +" WHERE userId = :signedInId ORDER BY courseName DESC")
+
+    @Query("SELECT * FROM " + CleverCardsDatabase.COURSE_TABLE +
+            " WHERE userId = :signedInId ORDER BY courseName DESC")
     LiveData<List<Course>> getCourseByUserIdLiveData(int signedInId);
 }

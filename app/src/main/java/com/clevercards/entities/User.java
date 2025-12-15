@@ -24,6 +24,8 @@ public class User {
     private boolean isAdmin;
 
 
+
+
     //constructor
 
     public User (String username, String password, boolean isAdmin){

@@ -66,20 +66,22 @@ public abstract class CleverCardsDatabase extends RoomDatabase{
         return INSTANCE;
     }
 
-    private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback(){
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db){
-            super.onCreate(db);
-            Log.i(MainActivity.TAG, "DATABASE CREATED!");
-            databaseWriteExecutor.execute(() -> {
-                UserDao dao = INSTANCE.userDao();
-                dao.deleteAll();
-                User admin = new User("admin1", "admin1", true);
-                admin.setAdmin(true);
-                dao.insertUser(admin);
-                User testUser1 = new User("user1","user1", false);
-                dao.insertUser(testUser1);
-            });
-        }
-    };
+    private static final RoomDatabase.Callback addDefaultValues =
+            new RoomDatabase.Callback() {
+                @Override
+                public void onCreate(@NonNull SupportSQLiteDatabase dbSupport) {
+                    super.onCreate(dbSupport);
+
+                    databaseWriteExecutor.execute(() -> {
+                        // SAFETY CHECK — prevents black screen crash
+                        CleverCardsDatabase db = INSTANCE;
+                        if (db == null) return;
+
+                        UserDao dao = db.userDao();
+                        //dao.deleteAll();
+                        dao.insertUser(new User("admin1", "admin1", true));
+                        dao.insertUser(new User("user1", "user1", false));
+                    });
+                }
+            };
 }

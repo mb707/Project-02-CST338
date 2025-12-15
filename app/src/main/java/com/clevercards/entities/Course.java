@@ -17,64 +17,40 @@ import java.util.Objects;
 @Entity(tableName = CleverCardsDatabase.COURSE_TABLE)
 public class Course {
 
-    /** Fields */
     @PrimaryKey(autoGenerate = true)
     private int courseId;
+
     private String courseName;
     private int numberOfCards;
     private int userId;
 
-    /** Constructors */
-//    public Course(String courseName, int numberOfCards, int userId){
-//        this.courseName = courseName;
-//        this.numberOfCards = numberOfCards;
-//        this.userId = userId;
-//    }
-
-    public Course(String courseName, int numberOfCards){
+    // THIS IS THE ONLY VALID CONSTRUCTOR FOR ROOM
+    public Course(String courseName, int numberOfCards, int userId) {
         this.courseName = courseName;
         this.numberOfCards = numberOfCards;
-    }
-
-    /** Getters and Setters */
-    public int getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
-    }
-
-    public int getNumberOfCards() {
-        return numberOfCards;
-    }
-
-    public void setNumberOfCards(int numberOfCards) {
-        this.numberOfCards = numberOfCards;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    /** Equals and HashCode */
+    public int getCourseId() { return courseId; }
+    public void setCourseId(int courseId) { this.courseId = courseId; }
+
+    public String getCourseName() { return courseName; }
+    public void setCourseName(String courseName) { this.courseName = courseName; }
+
+    public int getNumberOfCards() { return numberOfCards; }
+    public void setNumberOfCards(int numberOfCards) { this.numberOfCards = numberOfCards; }
+
+    public int getUserId() { return userId; }
+    public void setUserId(int userId) { this.userId = userId; }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Course)) return false;
         Course course = (Course) o;
-        return courseId == course.courseId && numberOfCards == course.numberOfCards && userId == course.userId && Objects.equals(courseName, course.courseName);
+        return courseId == course.courseId &&
+                numberOfCards == course.numberOfCards &&
+                userId == course.userId &&
+                Objects.equals(courseName, course.courseName);
     }
 
     @Override
@@ -82,7 +58,6 @@ public class Course {
         return Objects.hash(courseId, courseName, numberOfCards, userId);
     }
 
-    /** ToString */
     @NonNull
     @Override
     public String toString() {

@@ -15,7 +15,7 @@ import com.clevercards.databinding.ActivitySignInBinding;
 import com.clevercards.entities.User;
 
 /**
- * Author: France Zhang
+ * Author: France Zhang & Morgan Beebe (12-13-2025)
  * Created on: 12/6/2025
  * Description: SignInActivity class
  */
@@ -23,12 +23,7 @@ import com.clevercards.entities.User;
 
 public class SignInActivity extends AppCompatActivity {
 
-    private EditText usernameEditText;
-    private EditText passwordEditText;
-    private Button signInButton;
-
     private ActivitySignInBinding binding;
-
     private CleverCardsRepository repository;
 
     @Override
@@ -37,53 +32,57 @@ public class SignInActivity extends AppCompatActivity {
         binding = ActivitySignInBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // FIX: load repository safely
         repository = CleverCardsRepository.getRepository(getApplication());
 
-        usernameEditText = findViewById(R.id.usernameEditText);
-        passwordEditText = findViewById(R.id.passwordEditText);
-        signInButton = findViewById(R.id.signInButton);
+        if (repository == null) {
+            Toast.makeText(this, "Database failed to initialize!", Toast.LENGTH_LONG).show();
+            return;   // prevents null crash
+        }
 
-        // For Part 2: simple placeholder behavior
-        signInButton.setOnClickListener(v -> {
-            verifyUser();
-        });
+        binding.signInButton.setOnClickListener(v -> verifyUser());
     }
 
     private void verifyUser() {
-        String username = binding.usernameEditText.getText().toString();
+        if (repository == null) {
+            toastMaker("Repository unavailable.");
+
+            return;
+
+        }
+
+        String username = binding.usernameEditText.getText().toString().trim();
 
         if (username.isEmpty()) {
             toastMaker("username should not be blank");
             return;
         }
+
         LiveData<User> userObserver = repository.getUsersByUserName(username);
+
         userObserver.observe(this, user -> {
             if (user != null) {
                 String password = binding.passwordEditText.getText().toString();
-                if (password.equals(user.getPassword())) {
-                    int userId = user.getUserId();
 
-                    // Save the logged-in userId so it persists
+                if (password.equals(user.getPassword())) {
+
+                    int userId = user.getUserId();
                     getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE)
                             .edit()
                             .putInt(getString(R.string.preference_userId_key), userId)
                             .apply();
 
-                    // Start MainActivity with this userId as well
-                    startActivity(
-                            MainActivity.mainActivityIntentFactory(
-                                    this,
-                                    userId
-                            )
-                    );
+                    startActivity(MainActivity.mainActivityIntentFactory(this, userId));
                     finish();
+
                 } else {
                     toastMaker("Invalid password");
-                    binding.passwordEditText.setSelection(0);
+                    binding.passwordEditText.setText("");
                 }
+
             } else {
-                toastMaker(String.format("%s is not a valid username.", username));
-                binding.usernameEditText.setSelection(0);
+                toastMaker(username + " is not a valid username.");
+                binding.usernameEditText.setText("");
             }
         });
     }
@@ -92,7 +91,6 @@ public class SignInActivity extends AppCompatActivity {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
-    // Intent factory to be used by other views
     static Intent signInIntentFactory(Context context){
         return new Intent(context, SignInActivity.class);
     }
