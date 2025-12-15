@@ -12,6 +12,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CleverCards">
         <activity
+            android:name=".CreateFlashcardActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".ViewFlashcardsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EditUsersActivity"
+            android:exported="false" />
+        <activity
             android:name=".CreateCourseActivity"
             android:exported="false" />
         <activity

@@ -13,11 +13,17 @@
     <string name="preference_userId_key">PreferenceUserIdKeyCleverCards</string>
     <string name="preference_file_key">daclinkPrefernceFileNameCleverCards</string>
     <string name="create_course">Create Course</string>
-    <string name="create_flashcard">Create Flashcard</string>
-    <string name="enter_front_text">Enter Front Text</string>
-    <string name="enter_back_text">Enter Back Text</string>
+    <string name="enter_course_name">Enter Course Name</string>
+    <string name="enter_number_of_flashcards">Enter Number of Flashcards</string>
     <string name="next">Next</string>
+    <string name="back">Back</string>
+    <string name="view_users">View Users</string>
+    <string name="edit_users">Edit Users</string>
+    <string name="administrator">Administrator</string>
+    <string name="create_password">Create Password</string>
+    <string name="create_username">Create Username</string>
     <string name="dashboard">Dashboard</string>
+    <string name="enter_back_text">Enter Back Text</string>
 
 
 </resources>

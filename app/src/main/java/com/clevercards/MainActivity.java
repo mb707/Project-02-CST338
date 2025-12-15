@@ -5,6 +5,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,8 +23,8 @@ import com.clevercards.database.repository.CleverCardsRepository;
 import com.clevercards.databinding.ActivityMainBinding;
 import com.clevercards.entities.Course;
 import com.clevercards.entities.User;
-import com.clevercards.viewHolders.CourseAdapter;
-import com.clevercards.viewHolders.CourseViewModel;
+import com.clevercards.viewHolders.course.CourseAdapter;
+import com.clevercards.viewHolders.course.CourseViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,16 +99,6 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        //TODO: Create buttons for create course
-
-        //Temporarily use the username
-        userName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                createCourse();
-            }
-        });
-
         binding.btnSignOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         alertBuilder.setTitle(R.string.confirm_sign_out);
-        alertBuilder.setIcon(R.drawable.baseline_exit_to_app_24);
+        alertBuilder.setIcon(R.drawable.sign_out_icon);
         alertBuilder.create().show();
     }
 
@@ -196,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(SignInActivity.signInIntentFactory(getApplicationContext()));
     }
 
-    // TODO: implement this when create course logic is complete
     private void createCourse() {
         Intent intent = CreateCourseActivity.createCourseIntentFactory(
                 this,
@@ -207,13 +198,51 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO: wire this to the flashcard activity
     private void courseToFlashcards(Course course) {
-        Toast.makeText(this, course.getCourseName(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, course.getCourseName(), Toast.LENGTH_SHORT).show();
+        Intent intent = ViewFlashcardsActivity.intentFactory(this, signedInUserID);
+        startActivity(intent);
     }
 
     private void showUsername(){
         if (user != null){
             userName.setText(user.getUsername());
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.dashboard_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean isAdmin = user != null && user.isAdmin();
+
+        MenuItem createCourseItem = menu.findItem(R.id.action_create_course);
+        MenuItem editUsersItem = menu.findItem(R.id.action_edit_users);
+
+        if (createCourseItem != null) createCourseItem.setVisible(isAdmin);
+        if (editUsersItem != null) editUsersItem.setVisible(isAdmin);
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.action_create_course) {
+            createCourse();
+            return true;
+
+        } else if (id == R.id.action_edit_users) {
+            Intent intent = EditUsersActivity.editUsersIntentFactory(this, signedInUserID);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 
