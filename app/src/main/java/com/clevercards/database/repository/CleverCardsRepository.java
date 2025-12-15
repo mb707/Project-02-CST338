@@ -127,6 +127,7 @@ public class CleverCardsRepository {
 
     public List<Course> getCourseById(int courseId){
         return courseDao.getCourseById(courseId);
+        //return Collections.singletonList(courseDao.getCourseById(courseId));
     }
 
     public LiveData<List<Course>> getAllCoursesByUserIdLiveData(int loginUserId){

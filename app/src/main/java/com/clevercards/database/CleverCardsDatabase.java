@@ -82,4 +82,25 @@ public abstract class CleverCardsDatabase extends RoomDatabase{
             });
         }
     };
+
+    // private static final RoomDatabase.Callback addDefaultValues =
+    //            new RoomDatabase.Callback() {
+    //                @Override
+    //                public void onCreate(@NonNull SupportSQLiteDatabase dbSupport) {
+    //                    super.onCreate(dbSupport);
+    //
+    //                    databaseWriteExecutor.execute(() -> {
+    //                        // SAFETY CHECK — prevents black screen crash
+    //                        CleverCardsDatabase db = INSTANCE;
+    //                        if (db == null) return;
+    //
+    //                        UserDao dao = db.userDao();
+    //                        //dao.deleteAll();
+    //                        dao.insertUser(new User("admin1", "admin1", true));
+    //                        dao.insertUser(new User("user1", "user1", false));
+    //                    });
+    //                }
+    //            };
+
+
 }

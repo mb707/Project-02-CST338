@@ -198,7 +198,9 @@ public class MainActivity extends AppCompatActivity {
 
     // TODO: wire this to the flashcard activity
     private void courseToFlashcards(Course course) {
-        Toast.makeText(this, course.getCourseName(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, course.getCourseName(), Toast.LENGTH_SHORT).show();
+        Intent intent = ViewFlashcardsActivity.intentFactory(this, signedInUserID);
+        startActivity(intent);
     }
 
     private void showUsername(){
