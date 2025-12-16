@@ -3,10 +3,8 @@ package com.clevercards;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.PopupWindow;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -14,11 +12,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.room.Insert;
-import androidx.room.vo.Warning;
 
-import com.clevercards.database.CleverCardsDatabase;
-import com.clevercards.database.dao.CourseDao;
 import com.clevercards.database.repository.CleverCardsRepository;
 import com.clevercards.databinding.ActivityEditUsersBinding;
 import com.clevercards.entities.Course;
@@ -39,10 +33,8 @@ public class EditUsersActivity extends AppCompatActivity {
 
     private static final String EDIT_USERS_USER_ID =
             "com.clevercards.EDIT_USERS_USER_ID ";
-
-    private User user;
     private User selectedUser = null;
-    private int userId = -1;
+    private int signedInUserId = -1;
 
     private List<Course> allCourses = new ArrayList<>();
 
@@ -65,9 +57,9 @@ public class EditUsersActivity extends AppCompatActivity {
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
         courseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
 
-        userId = getIntent().getIntExtra(EDIT_USERS_USER_ID, -1);
-        if (userId == -1) {
-            userId = getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE)
+        signedInUserId = getIntent().getIntExtra(EDIT_USERS_USER_ID, -1);
+        if (signedInUserId == -1) {
+            signedInUserId = getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE)
                     .getInt(getString(R.string.preference_userId_key), -1);
         }
 
@@ -107,17 +99,15 @@ public class EditUsersActivity extends AppCompatActivity {
         });
 
         binding.signoutButton.setOnClickListener(v -> {
-            // You can reuse your MainActivity sign-out logic here later if you want
-            startActivity(SignInActivity.signInIntentFactory(this));
-            finish();
+            editUsersSignOut();
         });
     }
 
     private void addUser(){
         selectedUser = null;
         userAdapter.setSelectedUserId(-1);
-        Intent intent = CreateAccountActivity.createUsersIntentFactory(this,userId);
-        intent.putExtra(EDIT_USERS_USER_ID, userId);
+        Intent intent = CreateAccountActivity.createUsersIntentFactory(this, signedInUserId);
+        intent.putExtra(EDIT_USERS_USER_ID, signedInUserId);
         startActivity(intent);
         Toast.makeText(this, "Add user clicked", Toast.LENGTH_SHORT).show();
     }
@@ -217,6 +207,11 @@ public class EditUsersActivity extends AppCompatActivity {
         }
     }
 
+    private void editUsersSignOut(){
+        signedInUserId = -1;
+        SignOutManager.showSignOutDialog(this,EDIT_USERS_USER_ID);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.edit_user_dashboard_menu, menu);
@@ -234,7 +229,7 @@ public class EditUsersActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.dashboard) {
-            startActivity(MainActivity.mainActivityIntentFactory(this,userId));
+            startActivity(MainActivity.mainActivityIntentFactory(this, signedInUserId));
             return true;
         }
         return super.onOptionsItemSelected(item);

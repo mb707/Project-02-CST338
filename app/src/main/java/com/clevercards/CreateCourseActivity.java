@@ -2,7 +2,6 @@ package com.clevercards;
 
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -33,14 +31,14 @@ public class CreateCourseActivity extends AppCompatActivity {
     private Button backbutton;
     private Button nextbutton;
 
-    private static final String COURSE_USER_ID =
+    private static final String CREATE_COURSE_USER_ID =
             "com.clevercards.CREATE_COURSE_USER_ID";
 
     private ActivityCreateCourseBinding binding;
     private CourseViewModel courseViewModel;
 
     private Course course;
-    private int userId = -1;
+    private int signedInUserId = -1;
 
     private CleverCardsRepository repository;
 
@@ -51,7 +49,7 @@ public class CreateCourseActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         repository = CleverCardsRepository.getRepository(getApplication());
-        userId = getIntent().getIntExtra(COURSE_USER_ID, -1);
+        signedInUserId = getIntent().getIntExtra(CREATE_COURSE_USER_ID, -1);
         courseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
 
         courseName = findViewById(R.id.courseNameEditText);
@@ -78,13 +76,13 @@ public class CreateCourseActivity extends AppCompatActivity {
         signOutbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signOut();
+                createCourseSignOut();
             }
         });
     }
 
     private void backButtonAction(){
-        Intent intent = MainActivity.mainActivityIntentFactory(this, userId);
+        Intent intent = MainActivity.mainActivityIntentFactory(this, signedInUserId);
         startActivity(intent);
     }
 
@@ -101,7 +99,7 @@ public class CreateCourseActivity extends AppCompatActivity {
             return;
         }
         course = new Course(strCourseName, intNumOfCards);
-        course.setUserId(userId);
+        course.setUserId(signedInUserId);
 
         courseViewModel.insert(course);
 
@@ -109,27 +107,9 @@ public class CreateCourseActivity extends AppCompatActivity {
         finish(); //TODO: change this to an intent to flashcard activity
     }
 
-    private void signOut() {
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(CreateCourseActivity.this);
-        final AlertDialog alertDialog = alertBuilder.create();
-
-        alertBuilder.setMessage("Are you sure you want to sign out?");
-        alertBuilder.setPositiveButton("Sign Out", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                signOut();
-                toastMaker("Signed Out!");
-            }
-        });
-        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                alertDialog.dismiss();
-            }
-        });
-        alertBuilder.setTitle(R.string.confirm_sign_out);
-        alertBuilder.setIcon(R.drawable.sign_out_icon);
-        alertBuilder.create().show();
+    private void createCourseSignOut() {
+        signedInUserId = -1;
+        SignOutManager.showSignOutDialog(this,CREATE_COURSE_USER_ID);
     }
 
     private void toastMaker(String message) {
@@ -140,7 +120,7 @@ public class CreateCourseActivity extends AppCompatActivity {
     // Intent factory to be used by other views
     static Intent createCourseIntentFactory(Context context, int userId){
         Intent intent = new Intent(context, CreateCourseActivity.class);
-        intent.putExtra(COURSE_USER_ID, userId);
+        intent.putExtra(CREATE_COURSE_USER_ID, userId);
         return intent;
     }
 }

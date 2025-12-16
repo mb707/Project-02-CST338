@@ -102,32 +102,15 @@ public class MainActivity extends AppCompatActivity {
         binding.signoutButtonMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showSignOutDialog();
+                mainSignOut();
+
             }
         });
     }
 
-    private void showSignOutDialog(){
-        AlertDialog.Builder alertBuilder = new AlertDialog.Builder(MainActivity.this);
-        final AlertDialog alertDialog = alertBuilder.create();
-
-        alertBuilder.setMessage("Are you sure you want to sign out?");
-        alertBuilder.setPositiveButton("Sign Out", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                signOut();
-                Toast.makeText(MainActivity.this, "Signed out!", Toast.LENGTH_SHORT).show();
-            }
-        });
-        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                alertDialog.dismiss();
-            }
-        });
-        alertBuilder.setTitle(R.string.confirm_sign_out);
-        alertBuilder.setIcon(R.drawable.sign_out_icon);
-        alertBuilder.create().show();
+    private void mainSignOut(){
+        signedInUserID = SIGNED_OUT;
+        SignOutManager.showSignOutDialog(this,MAIN_ACTIVITY_USER_ID);
     }
 
     //Sign in the user logic below
@@ -179,13 +162,6 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor sharedPrefEditor = sharedPreferences.edit();
         sharedPrefEditor.putInt(getString(R.string.preference_userId_key), signedInUserID);
         sharedPrefEditor.apply();
-    }
-
-    private void signOut() {
-        signedInUserID = SIGNED_OUT;
-        updatedSharedPreference();
-        getIntent().putExtra(MAIN_ACTIVITY_USER_ID, SIGNED_OUT);
-        startActivity(SignInActivity.signInIntentFactory(getApplicationContext()));
     }
 
     private void createCourse() {
