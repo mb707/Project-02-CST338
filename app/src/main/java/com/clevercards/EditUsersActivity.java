@@ -63,9 +63,10 @@ public class EditUsersActivity extends AppCompatActivity {
                     .getInt(getString(R.string.preference_userId_key), -1);
         }
 
-        courseViewModel.getAllCoursesLD().observe(this, courses -> {
-            allCourses = courses;
-        });
+        courseViewModel.getAllCoursesByUserId(signedInUserId)
+                .observe(this, courses -> {
+                    allCourses = courses;   // only admin’s courses
+                });
 
         setupRecyclerView();
         setupButtons();
