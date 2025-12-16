@@ -13,6 +13,8 @@ import com.clevercards.entities.Flashcard;
 import java.util.List;
 
 public class FlashcardListAdapter extends RecyclerView.Adapter<FlashcardListAdapter.ViewHolder> {
+    //TODO: add missing elements for adapter and viewholder
+    // For reference look at UserAdapter since it follows similar structure
 
     private final List<Flashcard> flashcards;
 
