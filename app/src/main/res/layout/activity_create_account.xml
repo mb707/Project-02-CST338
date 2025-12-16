@@ -69,6 +69,7 @@
         android:background="@drawable/blue_rounded_button"
         android:text="@string/sign_in"
         android:textStyle="bold"
+        android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.493"
         app:layout_constraintStart_toStartOf="parent"
