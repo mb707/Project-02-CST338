@@ -99,7 +99,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        binding.btnSignOut.setOnClickListener(new View.OnClickListener() {
+        binding.signoutButtonMain.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showSignOutDialog();
