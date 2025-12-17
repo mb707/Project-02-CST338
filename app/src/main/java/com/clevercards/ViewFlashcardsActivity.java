@@ -24,7 +24,7 @@ public class ViewFlashcardsActivity extends AppCompatActivity {
     private CleverCardsRepository repository;
 
     private int userId;     // logged-in user
-    private static int courseId;   // course flashcards we are viewing
+    private int courseId;   // course flashcards we are viewing
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +96,11 @@ public class ViewFlashcardsActivity extends AppCompatActivity {
     }
 
     // Intent factory
-    public static Intent intentFactory(Context context, int userId) {
+    public static Intent intentFactory(
+            Context context,
+            int userId,
+            int courseId
+    ) {
         Intent intent = new Intent(context, ViewFlashcardsActivity.class);
         intent.putExtra("userId", userId);
         intent.putExtra("courseId", courseId);

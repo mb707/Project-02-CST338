@@ -20,7 +20,7 @@ import java.util.List;
  */
 @Dao
 public interface CourseDao {
-    //add new course (only created by awesome admins)
+    //add new course (only created by awesome admins/professors)
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertCourse(Course... course);
 
