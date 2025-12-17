@@ -170,6 +170,11 @@ public class CleverCardsRepository {
 //                flashcardDao.insertFlashcard(newCard);
 //            }
         });
+
+
+    }
+    public LiveData<List<Flashcard>> getAllFlashcardsLive() {
+        return flashcardDao.getAllFlashcardsLive();
     }
 
 
