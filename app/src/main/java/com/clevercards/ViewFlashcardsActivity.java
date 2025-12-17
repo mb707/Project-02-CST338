@@ -8,6 +8,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import com.clevercards.database.CleverCardsDatabase;
 import com.clevercards.database.repository.CleverCardsRepository;
 import com.clevercards.databinding.ActivityViewFlashcardsBinding;
 import com.clevercards.entities.Flashcard;
@@ -41,12 +42,17 @@ public class ViewFlashcardsActivity extends AppCompatActivity {
     }
 
     private void loadFlashcards() {
-        List<Flashcard> flashcards = repository.getAllFlashcards();
+        CleverCardsDatabase.databaseWriteExecutor.execute(() -> {
+            List<Flashcard> flashcards = repository.getAllFlashcards();
 
-        FlashcardListAdapter adapter = new FlashcardListAdapter(flashcards);
-
-        binding.flashcardsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        binding.flashcardsRecyclerView.setAdapter(adapter);
+            runOnUiThread(() -> {
+                FlashcardListAdapter adapter = new FlashcardListAdapter(flashcards);
+                binding.flashcardsRecyclerView.setLayoutManager(
+                        new LinearLayoutManager(this)
+                );
+                binding.flashcardsRecyclerView.setAdapter(adapter);
+            });
+        });
     }
 
     public static Intent intentFactory(Context context, int userId) {
