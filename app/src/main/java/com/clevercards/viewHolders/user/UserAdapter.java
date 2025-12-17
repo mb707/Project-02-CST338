@@ -87,7 +87,6 @@ public class UserAdapter extends ListAdapter<User, UserAdapter.UserViewHolder> {
 
         @Override
         public boolean areContentsTheSame(@NonNull User oldItem, @NonNull User newItem) {
-            // If you don't override equals in User, compare fields manually:
             return oldItem.equals(newItem);
         }
     }

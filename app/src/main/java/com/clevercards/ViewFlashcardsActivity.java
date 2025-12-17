@@ -6,21 +6,26 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.clevercards.database.repository.CleverCardsRepository;
 import com.clevercards.databinding.ActivityViewFlashcardsBinding;
-import com.clevercards.entities.Flashcard;
-import com.clevercards.viewHolders.flashcard.FlashcardListAdapter;
-
-import java.util.List;
+import com.clevercards.viewHolders.course.CourseViewModel;
+import com.clevercards.viewHolders.flashcard.FlashcardAdapter;
+import com.clevercards.viewHolders.flashcard.FlashcardViewModel;
 
 public class ViewFlashcardsActivity extends AppCompatActivity {
 
+    private static final String VIEW_FLASHCARD_COURSE_ID =
+            "com.clevercards.VIEW_FLASHCARD_COURSE_ID";
     private ActivityViewFlashcardsBinding binding;
     private CleverCardsRepository repository;
 
-    private int userId;  // which user to load flashcards for
+    private FlashcardAdapter flashcardAdapter;
+    private FlashcardViewModel flashcardViewModel;
+
+    private int courseID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,27 +34,33 @@ public class ViewFlashcardsActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         repository = CleverCardsRepository.getRepository(getApplication());
-        userId = getIntent().getIntExtra("userId", -1);
+        courseID = getIntent().getIntExtra(VIEW_FLASHCARD_COURSE_ID, -1);
+        flashcardViewModel = new ViewModelProvider(this).get(FlashcardViewModel.class);
 
-        if (userId == -1) {
+        if (courseID == -1) {
             Toast.makeText(this, "Unable to load flashcards", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
-        loadFlashcards();
-    }
-
-    private void loadFlashcards() {
-        List<Flashcard> flashcards = repository.getAllFlashcards();
-
-        FlashcardListAdapter adapter = new FlashcardListAdapter(flashcards);
+        flashcardAdapter = new FlashcardAdapter(
+                new FlashcardAdapter.FlashcardDiff(),
+                flashcard -> {
+                    Toast.makeText(this,
+                            flashcard.getFrontText(),
+                            Toast.LENGTH_SHORT).show();
+                }
+        );
 
         binding.flashcardsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        binding.flashcardsRecyclerView.setAdapter(adapter);
+        binding.flashcardsRecyclerView.setAdapter(flashcardAdapter);
+
+        flashcardViewModel.getAllFlashcardsByCourseId(courseID)
+                .observe(this, flashcards -> flashcardAdapter.submitList(flashcards));
     }
 
-    public static Intent intentFactory(Context context, int userId) {
+
+    public static Intent viewFlashcardIntentFactory(Context context, int userId) {
         Intent intent = new Intent(context, ViewFlashcardsActivity.class);
         intent.putExtra("userId", userId);
         return intent;

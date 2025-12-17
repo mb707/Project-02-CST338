@@ -3,16 +3,26 @@ package com.clevercards;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.clevercards.database.CleverCardsDatabase;
 import com.clevercards.database.repository.CleverCardsRepository;
+import com.clevercards.databinding.ActivityCreateFlashcardBinding;
 import com.clevercards.entities.Flashcard;
+import com.clevercards.viewHolders.course.CourseViewModel;
+import com.clevercards.viewHolders.flashcard.FlashcardViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Name: Morgan Beebe
@@ -22,89 +32,105 @@ import com.clevercards.entities.Flashcard;
 
 public class CreateFlashcardActivity extends AppCompatActivity {
 
+    private static final String CREATE_FLASHCARD_COURSE_ID = "com.clevercards.CREATE_FLASHCARD_COURSE_ID";
+    private static final String CREATE_FLASHCARD_USER_ID = "com.clevercards.CREATE_FLASHCARD_USER_ID";
     private EditText frontTextEdit;
     private EditText backTextEdit;
+
+    private int numOfCards;
+
+    private List<Flashcard> flashcardList = new ArrayList<>();
+    private ActivityCreateFlashcardBinding binding;
+
+    private FlashcardViewModel flashcardViewModel;
 
     private CleverCardsRepository repository;
 
     private int courseId;
-    private int userId;   // Passed from MainActivity
+    private int signedInUserId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_flashcard);
+        binding = ActivityCreateFlashcardBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         repository = CleverCardsRepository.getRepository(getApplication());
+        courseId = getIntent().getIntExtra(CREATE_FLASHCARD_COURSE_ID, -1);
+        signedInUserId = 1;
+        flashcardViewModel = new ViewModelProvider(this).get(FlashcardViewModel.class);
 
-        // Retrieve courseId & userId
-        courseId = getIntent().getIntExtra("courseId", -1);
-        userId = getIntent().getIntExtra("userId", -1);
-
-        if (courseId == -1 || userId == -1) {
+        if (courseId == -1) {
             Toast.makeText(this, "Error loading flashcard creator", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
-
         // UI binding
-        frontTextEdit = findViewById(R.id.frontTextEdit);
-        backTextEdit = findViewById(R.id.backTextEdit);
-
-        Button nextButton = findViewById(R.id.nextFlashcardButton);
-        Button dashboardButton = findViewById(R.id.dashboardButton);
-        Button signOutButton = findViewById(R.id.signOutBtn);
+        frontTextEdit = findViewById(R.id.frontText_EditText);
+        backTextEdit = findViewById(R.id.backText_EditText);
+        numOfCards = CreateCourseActivity.numOfCardsFromCC;
 
         // Save + new card
-        nextButton.setOnClickListener(v -> saveFlashcard(false));
+        binding.nextFlashcardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String front = frontTextEdit.getText().toString().trim();
+                String back = backTextEdit.getText().toString().trim();
+                if (flashcardList.size() + 1 < numOfCards){
+                    if (!front.isEmpty() && !back.isEmpty()){
+                        flashcardList.add(saveFlashcard(front,back));
+                    }
+                    else {
+                        Toast.makeText(CreateFlashcardActivity.this, "Both sides must be filled", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                else {
+                    returnToDashboard(false);
+                }
+            }
+        });
 
-        // Save LAST flashcard + return to dashboard
-        dashboardButton.setOnClickListener(v -> saveFlashcard(true));
+        // Returns to dashboard without saving flashcard progress - forces admin to click next as opposed to dashboard
+        binding.dashboardButton.setOnClickListener(v -> returnToDashboard(true));
 
         // Sign out
-        signOutButton.setOnClickListener(v -> {
-            startActivity(SignInActivity.signInIntentFactory(this));
-            finish();
+        binding.signOutButton.setOnClickListener(v -> {
+            signedInUserId = -1;
+            SignOutManager.showSignOutDialog(this, CREATE_FLASHCARD_COURSE_ID);
         });
     }
 
-    private void saveFlashcard(boolean returnToDashboard) {
-        String front = frontTextEdit.getText().toString().trim();
-        String back = backTextEdit.getText().toString().trim();
+    private Flashcard saveFlashcard(String front, String back) {
+        Flashcard flashcard = new Flashcard(courseId, front, back);
+        flashcardViewModel.insert(flashcard);
+        Toast.makeText(this, "Flashcard saved", Toast.LENGTH_SHORT).show();
+        frontTextEdit.setText("");
+        backTextEdit.setText("");
+        return flashcard;
+    }
 
-        if (front.isEmpty() || back.isEmpty()) {
-            Toast.makeText(this, "Both sides must be filled", Toast.LENGTH_SHORT).show();
+
+
+    private void returnToDashboard(boolean fromDashboardButton){
+        if (!fromDashboardButton){
+            startActivity(MainActivity.mainActivityIntentFactory(this, signedInUserId));
             return;
         }
-
-        Flashcard flashcard = new Flashcard(courseId, front, back);
-
-        // Write
-        CleverCardsDatabase.databaseWriteExecutor.execute(() -> {
-            repository.insertFlashcard(flashcard);
-
-            runOnUiThread(() -> {
-                Toast.makeText(this, "Flashcard saved!", Toast.LENGTH_SHORT).show();
-
-                if (returnToDashboard) {
-                    Intent intent = MainActivity.mainActivityIntentFactory(this, userId);
-                    startActivity(intent);
-                    finish();
-                } else {
-                    // Prepare for next flashcard
-                    frontTextEdit.setText("");
-                    backTextEdit.setText("");
-                    frontTextEdit.requestFocus();
-                }
-            });
-        });
+        new AlertDialog.Builder(this)
+                .setTitle("Return To Dashboard")
+                .setMessage("Are you sure you want to return to the dashboard? \n\nCourse will be saved without any flashcards.")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    startActivity(MainActivity.mainActivityIntentFactory(this, signedInUserId));
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
     // Intent Factory
-    public static Intent createFlashcardIntentFactory(Context context, int courseId, int userId) {
+    public static Intent createFlashcardIntentFactory(Context context, int courseId) {
         Intent intent = new Intent(context, CreateFlashcardActivity.class);
-        intent.putExtra("courseId", courseId);
-        intent.putExtra("userId", userId);
+        intent.putExtra(CREATE_FLASHCARD_COURSE_ID, courseId);
         return intent;
     }
 }

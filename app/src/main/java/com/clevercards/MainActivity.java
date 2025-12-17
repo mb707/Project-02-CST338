@@ -1,7 +1,6 @@
 package com.clevercards;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,10 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -175,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
     // TODO: wire this to the flashcard activity
     private void courseToFlashcards(Course course) {
         //Toast.makeText(this, course.getCourseName(), Toast.LENGTH_SHORT).show();
-        Intent intent = ViewFlashcardsActivity.intentFactory(this, signedInUserID);
+        Intent intent = ViewFlashcardsActivity.viewFlashcardIntentFactory(this, signedInUserID);
         startActivity(intent);
     }
 

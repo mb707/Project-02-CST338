@@ -1,5 +1,6 @@
 package com.clevercards.database.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -7,6 +8,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.clevercards.database.CleverCardsDatabase;
+import com.clevercards.entities.Course;
 import com.clevercards.entities.Flashcard;
 
 import java.util.List;
@@ -24,7 +26,7 @@ public interface FlashcardDao {
 
     //get all the flashcards for a specific course
     @Query("SELECT * FROM " + CleverCardsDatabase.FLASHCARD_TABLE + " WHERE courseId = :courseId")
-    List<Flashcard> getFlashcardsByCourse(int courseId);
+    LiveData<List<Flashcard>> getALLFlashcardsByCourseID(int courseId);
 
     //get a specific flashcard that was created
     @Query("SELECT * FROM " + CleverCardsDatabase.FLASHCARD_TABLE + " WHERE flashcardId = :flashcardId LIMIT 1")

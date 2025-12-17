@@ -5,6 +5,8 @@ import androidx.room.PrimaryKey;
 
 import com.clevercards.database.CleverCardsDatabase;
 
+import java.util.Objects;
+
 /**
  * Name: Morgan Beebe
  * Date: 2025-12-06
@@ -63,5 +65,17 @@ public class Flashcard {
 
     public void setBackText(String backText) {
         this.backText = backText;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Flashcard)) return false;
+        Flashcard flashcard = (Flashcard) o;
+        return flashcardId == flashcard.flashcardId && courseId == flashcard.courseId && Objects.equals(frontText, flashcard.frontText) && Objects.equals(backText, flashcard.backText);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(flashcardId, courseId, frontText, backText);
     }
 }

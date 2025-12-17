@@ -125,9 +125,8 @@ public class CleverCardsRepository {
         return courseDao.getCoursesByUser(userId);
     }
 
-    public List<Course> getCourseById(int courseId){
+    public Course getCourseById(int courseId){
         return courseDao.getCourseById(courseId);
-        //return Collections.singletonList(courseDao.getCourseById(courseId));
     }
 
     public LiveData<List<Course>> getAllCoursesByUserIdLiveData(int loginUserId){
@@ -156,19 +155,18 @@ public class CleverCardsRepository {
                     + "' for userId=" + targetUserId + " as courseId=" + newCourseId);
 
 
-            //TODO: implement when flashcard activity is wired up
-//            // 4. Get all flashcards of the source course
-//            List<Flashcard> originalCards = flashcardDao.getFlashcardsByCourse(sourceCourseId);
-//
-//            // 5. Clone each flashcard for the new course
-//            for (Flashcard card : originalCards) {
-//                Flashcard newCard = new Flashcard(
-//                        newCourseId,
-//                        card.getFrontText(),
-//                        card.getBackText()
-//                );
-//                flashcardDao.insertFlashcard(newCard);
-//            }
+            // 4. Get all flashcards of the source course
+            List<Flashcard> originalCards = flashcardDao.getALLFlashcardsByCourseID(sourceCourseId).getValue();
+
+            // 5. Clone each flashcard for the new course
+            for (Flashcard card : originalCards) {
+                Flashcard newCard = new Flashcard(
+                        newCourseId,
+                        card.getFrontText(),
+                        card.getBackText()
+                );
+                flashcardDao.insertFlashcard(newCard);
+            }
         });
     }
 
@@ -179,11 +177,13 @@ public class CleverCardsRepository {
     //ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ
 
     public void insertFlashcard(Flashcard... flashcard){
-        flashcardDao.insertFlashcard(flashcard);
+        CleverCardsDatabase.databaseWriteExecutor.execute(() -> {
+            flashcardDao.insertFlashcard(flashcard);
+        });
     }
 
-    public List<Flashcard> getFlashcardsByCourse(int courseId){
-        return flashcardDao.getFlashcardsByCourse(courseId);
+    public LiveData<List<Flashcard>> getALLFlashcardsByCourseID(int courseId){
+        return flashcardDao.getALLFlashcardsByCourseID(courseId);
     }
 
     public Flashcard getFlashcardsById(int flashcardById){

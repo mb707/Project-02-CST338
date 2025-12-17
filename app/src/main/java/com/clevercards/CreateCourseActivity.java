@@ -34,6 +34,8 @@ public class CreateCourseActivity extends AppCompatActivity {
     private static final String CREATE_COURSE_USER_ID =
             "com.clevercards.CREATE_COURSE_USER_ID";
 
+    public static int numOfCardsFromCC;
+
     private ActivityCreateCourseBinding binding;
     private CourseViewModel courseViewModel;
 
@@ -102,9 +104,15 @@ public class CreateCourseActivity extends AppCompatActivity {
         course.setUserId(signedInUserId);
 
         courseViewModel.insert(course);
+        numOfCardsFromCC = intNumOfCards;
 
         toastMaker("Course Created!");
-        finish(); //TODO: change this to an intent to flashcard activity
+        goToCreateFlashcardActivity();
+    }
+
+    private void goToCreateFlashcardActivity(){
+        Intent intent = CreateFlashcardActivity.createFlashcardIntentFactory(this, course.getCourseId());
+        startActivity(intent);
     }
 
     private void createCourseSignOut() {

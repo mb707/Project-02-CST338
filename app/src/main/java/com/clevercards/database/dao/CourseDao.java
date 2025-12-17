@@ -45,7 +45,7 @@ public interface CourseDao {
 
     //get a specific course based on its ID
     @Query("SELECT * FROM " + CleverCardsDatabase.COURSE_TABLE + " WHERE courseId = :courseId LIMIT 1")
-    List<Course> getCourseById(int courseId);
+    Course getCourseById(int courseId);
 
     @Query("SELECT * FROM " + CleverCardsDatabase.COURSE_TABLE +" WHERE userId = :signedInId ORDER BY courseName ASC")
     LiveData<List<Course>> getCourseByUserIdLiveData(int signedInId);

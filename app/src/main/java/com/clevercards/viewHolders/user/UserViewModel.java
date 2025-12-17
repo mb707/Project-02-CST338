@@ -27,6 +27,4 @@ public class UserViewModel extends AndroidViewModel {
     public void insert(User... users) {
         repository.insertUser(users);
     }
-
-    // Add delete/update helpers later
 }
