@@ -21,13 +21,14 @@
 			android:textStyle="bold"
 			android:textSize="18sp" />
 
-		<TextView
-			android:id="@+id/backTextView"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:text="Back side"
-			android:layout_marginTop="4dp"
-			android:textSize="16sp" />
+        <TextView
+            android:id="@+id/backTextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Back side"
+            android:layout_marginTop="4dp"
+            android:textSize="16sp"
+            android:visibility="gone" />
 
 	</LinearLayout>
 </androidx.cardview.widget.CardView>

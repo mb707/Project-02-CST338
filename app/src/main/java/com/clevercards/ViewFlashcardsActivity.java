@@ -24,7 +24,7 @@ public class ViewFlashcardsActivity extends AppCompatActivity {
     private CleverCardsRepository repository;
 
     private int userId;     // logged-in user
-    private static int courseId;   // course whose flashcards we are viewing
+    private static int courseId;   // course flashcards we are viewing
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,15 +43,15 @@ public class ViewFlashcardsActivity extends AppCompatActivity {
             return;
         }
 
-        // 🔘 Top navigation buttons
+        //Top navigation buttons
         Button backButton = findViewById(R.id.backButton);
         Button dashboardButton = findViewById(R.id.dashboardButton);
         Button signOutButton = findViewById(R.id.signOutButton);
 
-        // ➕ Floating Action Button
+        //Floating Action Button, the FAB man!
         FloatingActionButton addFab = findViewById(R.id.addFlashcardFab);
 
-        // ➕ Add flashcard
+        //Add flashcard
         addFab.setOnClickListener(v -> {
             Intent intent = CreateFlashcardActivity.createFlashcardIntentFactory(
                     this,
@@ -61,17 +61,17 @@ public class ViewFlashcardsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        // ⬅ Back to previous screen
+        //back to previous screen
         backButton.setOnClickListener(v -> finish());
 
-        // 🏠 Dashboard (courses list)
+        //Dashboard (courses list)
         dashboardButton.setOnClickListener(v -> {
             Intent intent = MainActivity.mainActivityIntentFactory(this, userId);
             startActivity(intent);
             finish();
         });
 
-        // 🚪 Sign out (clear back stack)
+        //Sign out (clear back stack)
         signOutButton.setOnClickListener(v -> {
             startActivity(SignInActivity.signInIntentFactory(this));
             finishAffinity();
