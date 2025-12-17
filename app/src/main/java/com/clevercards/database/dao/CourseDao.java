@@ -21,7 +21,7 @@ import java.util.List;
 @Dao
 public interface CourseDao {
     //add new course (only created by awesome admins)
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     void insertCourse(Course... course);
 
     @Query("DELETE from " + CleverCardsDatabase.COURSE_TABLE)
@@ -50,7 +50,7 @@ public interface CourseDao {
     @Query("SELECT * FROM " + CleverCardsDatabase.COURSE_TABLE +" WHERE userId = :signedInId ORDER BY courseName DESC")
     LiveData<List<Course>> getCourseByUserIdLiveData(int signedInId);
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     long insertSingleCourse(Course course);
 
     @Query("SELECT * FROM " + CleverCardsDatabase.COURSE_TABLE + " WHERE courseId = :courseId LIMIT 1")

@@ -27,45 +27,25 @@ import java.util.concurrent.Future;
  * Explanation: class to control my giant data repository
  */
 public class CleverCardsRepository {
+
     private final UserDao userDao;
     private final CourseDao courseDao;
     private final FlashcardDao flashcardDao;
 
-    private ArrayList<Course> allCourses;
-    private ArrayList<Flashcard> allFlashCards;
-
     private static CleverCardsRepository repository;
 
-
-    //main constructor for receiving the database instance
     private CleverCardsRepository(Context context){
         CleverCardsDatabase db = CleverCardsDatabase.getInstance(context);
-        this.userDao = db.userDao();
-        this.courseDao = db.courseDao();
-        this.flashcardDao = db.flashcardDao();
-        this.allCourses = (ArrayList<Course>) this.courseDao.getAllCourses();
-        this.allFlashCards = (ArrayList<Flashcard>) this.flashcardDao.getAllFlashcards();
-
+        userDao = db.userDao();
+        courseDao = db.courseDao();
+        flashcardDao = db.flashcardDao();
     }
 
-    public static CleverCardsRepository getRepository(Application application){
-        if (repository != null) {
-            return repository;
+    public static synchronized CleverCardsRepository getRepository(Application application){
+        if (repository == null) {
+            repository = new CleverCardsRepository(application);
         }
-        Future<CleverCardsRepository> future = CleverCardsDatabase.databaseWriteExecutor.submit(
-                new Callable<CleverCardsRepository>() {
-                    @Override
-                    public CleverCardsRepository call() throws Exception {
-                        return new CleverCardsRepository(application);
-                    }
-                }
-        );
-        try {
-            return future.get();
-        } catch (InterruptedException | ExecutionException e) {
-            Log.d(MainActivity.TAG, "Problem getting GymLogRepository, thread error.");
-        }
-        return null;
+        return repository;
     }
 
     //╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯╰(*°▽°*)╯

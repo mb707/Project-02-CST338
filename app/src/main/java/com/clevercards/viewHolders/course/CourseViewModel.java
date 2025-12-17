@@ -14,7 +14,8 @@ import java.util.List;
 
 public class CourseViewModel extends AndroidViewModel {
 
-    private CleverCardsRepository repository;
+    private final CleverCardsRepository repository;
+    private LiveData<List<Course>> userCourses;
 
     public CourseViewModel(@NonNull Application application) {
         super(application);
@@ -22,19 +23,22 @@ public class CourseViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Course>> getAllCoursesByUserId(int userId) {
-        return repository.getAllCoursesByUserIdLiveData(userId);
+        if (userCourses == null) {
+            userCourses = repository.getAllCoursesByUserIdLiveData(userId);
+        }
+        return userCourses;
     }
 
-    public LiveData<List<Course>> getAllCoursesLD() {
-        return repository.getAllCoursesLD();
+    public void insert(Course course) {
+        repository.insertCourse(course);
     }
 
     public void update(Course course) {
         repository.updateCourse(course);
     }
 
-    public void insert(Course course) {
-        repository.insertCourse(course);
+    public void delete(Course course) {
+        repository.deleteCourse(course);
     }
 }
 
