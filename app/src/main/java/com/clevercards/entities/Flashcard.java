@@ -31,9 +31,9 @@ public class Flashcard {
     @PrimaryKey(autoGenerate = true)
     private int flashcardId;
 
-    private final int courseId;
-    private final String frontText;
-    private final String backText;
+    private int courseId;
+    private String frontText;
+    private String backText;
 
     public Flashcard(int courseId, String frontText, String backText) {
         this.courseId = courseId;
