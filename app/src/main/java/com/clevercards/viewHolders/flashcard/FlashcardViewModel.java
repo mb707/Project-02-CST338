@@ -19,8 +19,8 @@ public class FlashcardViewModel {
     private final LiveData<List<Flashcard>> flashcards;
     public FlashcardViewModel(@NonNull Application application) {
         super(application);
-        repository = CleverCardsRepository.getRepository(application);
-        flashcards = repository.getAllFlashcardsLive();
+        CleverCardsRepository repo = CleverCardsRepository.getRepository(application);
+        flashcards = repo.getAllFlashcardsLive();
     }
 
     public LiveData<List<Flashcard>> getFlashcards() {

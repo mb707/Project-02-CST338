@@ -46,6 +46,7 @@ public class ViewFlashcardsActivity extends AppCompatActivity {
         });
     }
 
+
     public static Intent intentFactory(Context context, int userId) {
         Intent intent = new Intent(context, ViewFlashcardsActivity.class);
         intent.putExtra("userId", userId);

@@ -1,5 +1,6 @@
 package com.clevercards.database.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -40,6 +41,9 @@ public interface FlashcardDao {
     @Query("DELETE from " + CleverCardsDatabase.FLASHCARD_TABLE)
     void deleteAll();
 
+
+    @Query("SELECT * FROM " + CleverCardsDatabase.FLASHCARD_TABLE)
+    LiveData<List<Flashcard>> getAllFlashcardsLive();
 
 
 }
