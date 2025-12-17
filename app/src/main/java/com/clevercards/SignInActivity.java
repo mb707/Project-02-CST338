@@ -62,7 +62,7 @@ public class SignInActivity extends AppCompatActivity {
         String username = binding.usernameEditText.getText().toString();
 
         if (username.isEmpty()) {
-            toastMaker("username should not be blank");
+            toastMaker("Username must not be blank");
             return;
         }
         LiveData<User> userObserver = repository.getUsersByUserName(username);

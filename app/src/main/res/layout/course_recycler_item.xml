@@ -10,6 +10,7 @@
         android:layout_height="80dp"
         android:background="@drawable/blue_rounded_button"
         android:text="@string/course_name"
+        android:textAllCaps="true"
         android:textStyle="bold" />
 
 </FrameLayout>

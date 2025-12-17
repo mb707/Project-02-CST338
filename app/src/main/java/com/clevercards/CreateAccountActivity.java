@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.LiveData;
 
 import com.clevercards.database.repository.CleverCardsRepository;
 import com.clevercards.databinding.ActivityCreateAccountBinding;
@@ -49,14 +50,12 @@ public class CreateAccountActivity extends AppCompatActivity {
             binding.adminSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
                 if (isChecked) {
                     // The switch is enabled
-                    Toast.makeText(this, "Feature Enabled", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Granted Admin Access", Toast.LENGTH_SHORT).show();
                     isAdmin = true;
-                    // Perform actions when the switch is ON
                 } else {
                     // The switch is disabled
-                    Toast.makeText(this, "Feature Disabled", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Not Granted Admin Access", Toast.LENGTH_SHORT).show();
                     isAdmin = false;
-                    // Perform actions when the switch is OFF
                 }
             });
             }
@@ -75,21 +74,60 @@ public class CreateAccountActivity extends AppCompatActivity {
             binding.adminSwitch.setVisibility(View.GONE);
             return false;
         }
-        else { // created by an Admin
+        else { // created by an Admin - granted the ability to make the new user an admin
             binding.adminSwitch.setVisibility(View.VISIBLE);
-            binding.welcomeTextView.setText("Create New User");
-            binding.signInButton.setText("Submit");
+            binding.welcomeTextView.setText(R.string.create_new_user);
+            binding.signInButton.setText(R.string.submit);
             return true;
         }
     }
 
     private void signIn(boolean isAdmin){
-        String name, password;
-        name = binding.createUsernameTextView.getText().toString();
+        String username, password;
+        username = binding.createUsernameTextView.getText().toString();
         password = binding.createPasswordEditText.getText().toString();
-        User newUser = new User(name, password, isAdmin);
+        if (username.isEmpty()) {
+            toastMaker("Username must not be blank");
+            return;
+        }
+        if (password.isEmpty()){
+            toastMaker("Password must not be blank");
+            return;
+        }
+        User newUser = new User(username, password, isAdmin);
         repository.insertUser(newUser);
-        finish();
+        routeUserToMainUnlessAdminCreated(newUser);
+    }
+
+    private void routeUserToMainUnlessAdminCreated(User newUser){
+        if (currentUserId != -1){
+            finish();
+        }
+        else{
+            LiveData<User> userObserver = repository.getUsersByUserName(newUser.getUsername());
+            userObserver.observe(this, user -> {
+                if (user != null) {
+                        newUserId = user.getUserId();
+                        // Save the logged-in userId so it persists
+                        getSharedPreferences(getString(R.string.preference_file_key), MODE_PRIVATE)
+                                .edit()
+                                .putInt(getString(R.string.preference_userId_key), newUserId)
+                                .apply();
+                        // Start MainActivity with this userId as well
+                        startActivity(
+                                MainActivity.mainActivityIntentFactory(
+                                        this,
+                                        newUserId
+                                )
+                        );
+                        finish();
+                }
+            });
+        }
+    }
+
+    private void toastMaker(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 

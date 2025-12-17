@@ -47,7 +47,7 @@ public interface CourseDao {
     @Query("SELECT * FROM " + CleverCardsDatabase.COURSE_TABLE + " WHERE courseId = :courseId LIMIT 1")
     List<Course> getCourseById(int courseId);
 
-    @Query("SELECT * FROM " + CleverCardsDatabase.COURSE_TABLE +" WHERE userId = :signedInId ORDER BY courseName DESC")
+    @Query("SELECT * FROM " + CleverCardsDatabase.COURSE_TABLE +" WHERE userId = :signedInId ORDER BY courseName ASC")
     LiveData<List<Course>> getCourseByUserIdLiveData(int signedInId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
