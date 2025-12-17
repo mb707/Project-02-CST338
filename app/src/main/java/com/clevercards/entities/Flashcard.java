@@ -1,9 +1,13 @@
 package com.clevercards.entities;
 
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.clevercards.database.CleverCardsDatabase;
+
+import java.util.Objects;
 
 /**
  * Name: Morgan Beebe
@@ -12,56 +16,45 @@ import com.clevercards.database.CleverCardsDatabase;
  * stores all my front and back text and course it belongs to.
  */
 
-@Entity(tableName = CleverCardsDatabase.FLASHCARD_TABLE)
+@Entity(
+        tableName = CleverCardsDatabase.FLASHCARD_TABLE,
+        foreignKeys = @ForeignKey(
+                entity = Course.class,
+                parentColumns = "courseId",
+                childColumns = "courseId",
+                onDelete = ForeignKey.CASCADE
+        ),
+        indices = {@Index("courseId")}
+)
 public class Flashcard {
+
     @PrimaryKey(autoGenerate = true)
     private int flashcardId;
 
-    private int courseId; //fk to course
-    private String frontText;
-    private String backText;
+    private final int courseId;
+    private final String frontText;
+    private final String backText;
 
-    //constructor
-
-    public Flashcard(int courseId, String frontText, String backText){
-        this.courseId=courseId;
-        this.frontText=frontText;
-        this.backText=backText;
-
-    }
-
-    //getters and setters
-
-
-    public int getFlashcardId() {
-        return flashcardId;
-    }
-
-    public void setFlashcardId(int flashcardId) {
-        this.flashcardId = flashcardId;
-    }
-
-    public int getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(int courseId) {
+    public Flashcard(int courseId, String frontText, String backText) {
         this.courseId = courseId;
-    }
-
-    public String getFrontText() {
-        return frontText;
-    }
-
-    public void setFrontText(String frontText) {
         this.frontText = frontText;
-    }
-
-    public String getBackText() {
-        return backText;
-    }
-
-    public void setBackText(String backText) {
         this.backText = backText;
+    }
+
+    // getters/setters...
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Flashcard)) return false;
+        Flashcard that = (Flashcard) o;
+        return courseId == that.courseId
+                && frontText.equals(that.frontText)
+                && backText.equals(that.backText);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(courseId, frontText, backText);
     }
 }

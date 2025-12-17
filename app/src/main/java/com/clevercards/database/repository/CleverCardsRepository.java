@@ -81,16 +81,20 @@ public class CleverCardsRepository {
     //ALL THE COURSE METHODS
     //ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ
 
-    public void insertCourse(Course... course){
-        CleverCardsDatabase.databaseWriteExecutor.execute(() -> {
-            courseDao.insertCourse(course);
-        });
+    public LiveData<List<Course>> getCoursesByUserIdLiveData(int userId){
+        return courseDao.getCoursesByUserIdLiveData(userId);
     }
 
-    public void updateCourse(Course course) {
-        CleverCardsDatabase.databaseWriteExecutor.execute(() -> {
-            courseDao.updateCourse(course);
-        });
+    public void insertCourse(Course course){
+        CleverCardsDatabase.databaseWriteExecutor.execute(() ->
+                courseDao.insertCourse(course)
+        );
+    }
+
+    public void updateCourse(Course course){
+        CleverCardsDatabase.databaseWriteExecutor.execute(() ->
+                courseDao.updateCourse(course)
+        );
     }
 
     public LiveData<List<Course>> getAllCoursesLD() {
@@ -164,7 +168,9 @@ public class CleverCardsRepository {
     //ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ  ᓚᘏᗢ
 
     public void insertFlashcard(Flashcard... flashcard){
-        flashcardDao.insertFlashcard(flashcard);
+        CleverCardsDatabase.databaseWriteExecutor.execute(() ->
+                flashcardDao.insertFlashcard(flashcard)
+        );
     }
 
     public List<Flashcard> getFlashcardsByCourse(int courseId){
@@ -182,6 +188,7 @@ public class CleverCardsRepository {
     public void deleteFlashcard(Flashcard flashcard){
         flashcardDao.deleteFlashcard(flashcard);
     }
+
 
 
 }
