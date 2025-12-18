@@ -76,13 +76,14 @@ public class Course {
         Course course = (Course) o;
         return courseId == course.courseId && numberOfCards == course.numberOfCards && userId == course.userId && Objects.equals(courseName, course.courseName);
     }
-
+    // Generates hash code for the course
     @Override
     public int hashCode() {
         return Objects.hash(courseId, courseName, numberOfCards, userId);
     }
 
     /** ToString */
+    // Returns a readable string version of the course
     @NonNull
     @Override
     public String toString() {
