@@ -15,17 +15,17 @@ import java.util.List;
 /**
  * Author: Morgan and Ashley
  * Created on: 12/6/2025
- * Description: Flashcard List Adapter
+ * Description: Flashcard List Adapter for displaying all flashcards
+ * creates view holders and binding flashcard data
  */
 public class FlashcardListAdapter
         extends RecyclerView.Adapter<FlashcardViewHolder> {
-
+    // List of flashcards to display
     private final List<Flashcard> flashcards;
-
+    // Adapter constructor
     public FlashcardListAdapter(List<Flashcard> flashcards) {
         this.flashcards = flashcards;
     }
-
     @NonNull
     @Override
     public FlashcardViewHolder onCreateViewHolder(
