@@ -156,19 +156,18 @@ public class CleverCardsRepository {
                     + "' for userId=" + targetUserId + " as courseId=" + newCourseId);
 
 
-            //TODO: implement when flashcard activity is wired up
-//            // 4. Get all flashcards of the source course
-//            List<Flashcard> originalCards = flashcardDao.getFlashcardsByCourse(sourceCourseId);
-//
-//            // 5. Clone each flashcard for the new course
-//            for (Flashcard card : originalCards) {
-//                Flashcard newCard = new Flashcard(
-//                        newCourseId,
-//                        card.getFrontText(),
-//                        card.getBackText()
-//                );
-//                flashcardDao.insertFlashcard(newCard);
-//            }
+            // 4. Get all flashcards of the source course
+            List<Flashcard> originalCards = flashcardDao.getFlashcardsByCourse(sourceCourseId);
+
+            // 5. Clone each flashcard for the new course
+            for (Flashcard card : originalCards) {
+                Flashcard newCard = new Flashcard(
+                        newCourseId,
+                        card.getFrontText(),
+                        card.getBackText()
+                );
+                flashcardDao.insertFlashcard(newCard);
+            }
         });
     }
 

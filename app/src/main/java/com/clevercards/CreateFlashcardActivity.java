@@ -55,11 +55,16 @@ public class CreateFlashcardActivity extends AppCompatActivity {
         Button dashboardButton = findViewById(R.id.dashboardButton);
         Button signOutButton = findViewById(R.id.signOutBtn);
 
-        // Save + new card
+        // save flashcard and add new flashcard
         nextButton.setOnClickListener(v -> saveFlashcard(false));
 
-        // Save LAST flashcard + return to dashboard
-        dashboardButton.setOnClickListener(v -> saveFlashcard(true));
+        // go to dashboard WITHOUT saving or validating
+        dashboardButton.setOnClickListener(v -> {
+            Intent intent = MainActivity.mainActivityIntentFactory(this, userId);
+            startActivity(intent);
+            finish();
+        });
+
 
         // Sign out
         signOutButton.setOnClickListener(v -> {

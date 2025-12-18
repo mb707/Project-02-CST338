@@ -5,16 +5,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.clevercards.R;
 import com.clevercards.entities.Flashcard;
 
 import java.util.List;
-
-public class FlashcardListAdapter extends RecyclerView.Adapter<FlashcardListAdapter.ViewHolder> {
-    //TODO: add missing elements for adapter and viewholder
-    // For reference look at UserAdapter since it follows similar structure
+/**
+ * Author: Morgan and Ashley
+ * Created on: 12/6/2025
+ * Description: Flashcard List Adapter
+ */
+public class FlashcardListAdapter
+        extends RecyclerView.Adapter<FlashcardViewHolder> {
 
     private final List<Flashcard> flashcards;
 
@@ -22,32 +26,26 @@ public class FlashcardListAdapter extends RecyclerView.Adapter<FlashcardListAdap
         this.flashcards = flashcards;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FlashcardViewHolder onCreateViewHolder(
+            @NonNull ViewGroup parent, int viewType) {
+
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.flashcard_row_item, parent, false);
-        return new ViewHolder(view);
+
+        return new FlashcardViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        Flashcard card = flashcards.get(position);
-        holder.front.setText(card.getFrontText());
-        holder.back.setText(card.getBackText());
+    public void onBindViewHolder(
+            @NonNull FlashcardViewHolder holder, int position) {
+
+        holder.bind(flashcards.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return flashcards.size();
-    }
-
-    static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView front, back;
-
-        ViewHolder(View itemView) {
-            super(itemView);
-            front = itemView.findViewById(R.id.frontTextView);
-            back = itemView.findViewById(R.id.backTextView);
-        }
+        return flashcards == null ? 0 : flashcards.size();
     }
 }

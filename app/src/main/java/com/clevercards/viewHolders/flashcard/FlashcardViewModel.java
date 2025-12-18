@@ -9,7 +9,11 @@ import com.clevercards.database.repository.CleverCardsRepository;
 import com.clevercards.entities.Course;
 
 import java.util.List;
-
+/**
+ * Author: Morgan and Ashley
+ * Created on: 12/6/2025
+ * Description: Flashcard View Model
+ */
 public class FlashcardViewModel {
     //TODO: adapt for flashcard
 
