@@ -17,14 +17,31 @@ import com.clevercards.viewHolders.flashcard.FlashcardListAdapter;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
-
+/**
+ * Name: Morgan Beebe & Ashley Wozow
+ * Date: 2025-12-16
+ * Explanation: activity responsible for displaying all flashcards
+ *          associated with a specific course
+ * presents flashcards in a scrollable list using recycler view.
+ * allows admin to add new flashcards,
+ *          navigate back, return to dashboard, or sign out
+ */
 public class ViewFlashcardsActivity extends AppCompatActivity {
 
+    //view binding instance for accessing layout views
     private ActivityViewFlashcardsBinding binding;
+    //repo used to retrieve flashcards from the database
     private CleverCardsRepository repository;
 
+    //ID of the currently logged in user
     private int userId;     // logged-in user
+    //ID of the course whose flashcards are being displayed
     private int courseId;   // course flashcards we are viewing
+
+
+     // initializes the activity, validates intent data,
+    //      sets up navigation controls,
+     // and loads flashcards for the selected course.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +51,11 @@ public class ViewFlashcardsActivity extends AppCompatActivity {
 
         repository = CleverCardsRepository.getRepository(getApplication());
 
+        // Retrieve intent data
         userId = getIntent().getIntExtra("userId", -1);
         courseId = getIntent().getIntExtra("courseId", -1);
 
+        // Validate intent data
         if (userId == -1 || courseId == -1) {
             Toast.makeText(this, "Unable to load flashcards", Toast.LENGTH_SHORT).show();
             finish();
@@ -51,7 +70,7 @@ public class ViewFlashcardsActivity extends AppCompatActivity {
         //Floating Action Button, the FAB man!
         FloatingActionButton addFab = findViewById(R.id.addFlashcardFab);
 
-        //Add flashcard
+        //goes to  add flashcard screen
         addFab.setOnClickListener(v -> {
             Intent intent = CreateFlashcardActivity.createFlashcardIntentFactory(
                     this,
@@ -71,7 +90,7 @@ public class ViewFlashcardsActivity extends AppCompatActivity {
             finish();
         });
 
-        //Sign out (clear back stack)
+        //Sign out (clear activity)
         signOutButton.setOnClickListener(v -> {
             startActivity(SignInActivity.signInIntentFactory(this));
             finishAffinity();
@@ -80,6 +99,9 @@ public class ViewFlashcardsActivity extends AppCompatActivity {
         loadFlashcards();
     }
 
+    //Loads flashcards for the current course from the database
+     // database access is performed on a background thread,
+    // the Recycler View is updated on the main UI thread
     private void loadFlashcards() {
         CleverCardsDatabase.databaseWriteExecutor.execute(() -> {
             List<Flashcard> flashcards =
@@ -95,7 +117,7 @@ public class ViewFlashcardsActivity extends AppCompatActivity {
         });
     }
 
-    // Intent factory
+    // Intent factory method for launching view flashcards activity
     public static Intent intentFactory(
             Context context,
             int userId,
