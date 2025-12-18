@@ -16,23 +16,17 @@ import com.clevercards.database.CleverCardsDatabase;
 public class Flashcard {
     @PrimaryKey(autoGenerate = true)
     private int flashcardId;
-
     private int courseId; //fk to course
     private String frontText;
     private String backText;
-
-    //constructor
-
+    // Constructor used when creating a new flashcard
     public Flashcard(int courseId, String frontText, String backText){
         this.courseId=courseId;
         this.frontText=frontText;
         this.backText=backText;
 
     }
-
     //getters and setters
-
-
     public int getFlashcardId() {
         return flashcardId;
     }
