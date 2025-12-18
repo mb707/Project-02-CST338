@@ -33,6 +33,8 @@
     <string name="return_to_dashboard">Return to Dashboard</string>
     <string name="go_back">Go Back</string>
     <string name="create">Create</string>
+    <string name="create_flashcard">Create Flashcard</string>
+    <string name="enter_front_text">Enter Front Text</string>
 
 
 </resources>
