@@ -65,7 +65,7 @@ public abstract class CleverCardsDatabase extends RoomDatabase{
         }
         return INSTANCE;
     }
-
+    // Callback to insert default data when database is created
     private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback(){
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db){
