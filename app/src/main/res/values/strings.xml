@@ -32,6 +32,7 @@
     <string name="flashcard_view">Flashcard View</string>
     <string name="return_to_dashboard">Return to Dashboard</string>
     <string name="go_back">Go Back</string>
+    <string name="create">Create</string>
 
 
 </resources>
