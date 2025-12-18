@@ -3,9 +3,12 @@ package com.clevercards;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 import android.widget.Button;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -23,7 +26,7 @@ public class ViewFlashcardsActivity extends AppCompatActivity {
     private ActivityViewFlashcardsBinding binding;
     private CleverCardsRepository repository;
 
-    private int userId;     // logged-in user
+    private int signedInUserId;     // signed-in user
     private int courseId;   // course flashcards we are viewing
 
     @Override
@@ -34,47 +37,18 @@ public class ViewFlashcardsActivity extends AppCompatActivity {
 
         repository = CleverCardsRepository.getRepository(getApplication());
 
-        userId = getIntent().getIntExtra("userId", -1);
+        signedInUserId = getIntent().getIntExtra("userId", -1);
         courseId = getIntent().getIntExtra("courseId", -1);
 
-        if (userId == -1 || courseId == -1) {
+        if (signedInUserId == -1 || courseId == -1) {
             Toast.makeText(this, "Unable to load flashcards", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
-        //Top navigation buttons
-        Button backButton = findViewById(R.id.backButton);
-        Button dashboardButton = findViewById(R.id.dashboardButton);
-        Button signOutButton = findViewById(R.id.signOutButton);
-
-        //Floating Action Button, the FAB man!
-        FloatingActionButton addFab = findViewById(R.id.addFlashcardFab);
-
-        //Add flashcard
-        addFab.setOnClickListener(v -> {
-            Intent intent = CreateFlashcardActivity.createFlashcardIntentFactory(
-                    this,
-                    courseId,
-                    userId
-            );
-            startActivity(intent);
-        });
-
-        //back to previous screen
-        backButton.setOnClickListener(v -> finish());
-
-        //Dashboard (courses list)
-        dashboardButton.setOnClickListener(v -> {
-            Intent intent = MainActivity.mainActivityIntentFactory(this, userId);
-            startActivity(intent);
-            finish();
-        });
-
-        //Sign out (clear back stack)
-        signOutButton.setOnClickListener(v -> {
-            startActivity(SignInActivity.signInIntentFactory(this));
-            finishAffinity();
+        binding.signOutButton.setOnClickListener(v -> {
+            signedInUserId = -1;
+            SignOutManager.showSignOutDialog(this, "userid");
         });
 
         loadFlashcards();
@@ -93,6 +67,40 @@ public class ViewFlashcardsActivity extends AppCompatActivity {
                 binding.flashcardsRecyclerView.setAdapter(adapter);
             });
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.view_flashcard_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem returnToDashboard = menu.findItem(R.id.dashboard);
+        MenuItem addFlashcard = menu.findItem(R.id.createFlashcard);
+        if (returnToDashboard != null) returnToDashboard.setVisible(true);
+        if (addFlashcard != null) addFlashcard.setVisible(true);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.dashboard) {
+            finish();
+            return true;
+        }
+        else if (id == R.id.createFlashcard) {
+            Intent intent = CreateFlashcardActivity.createFlashcardIntentFactory(
+                    this,
+                    courseId,
+                    signedInUserId
+            );
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // Intent factory

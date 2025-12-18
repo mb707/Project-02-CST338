@@ -3,8 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/createFlashcard"
+        android:title="Create Flashcard"
+        android:icon="@drawable/plus_sign"
+        app:showAsAction="ifRoom" />
+
+    <item
         android:id="@+id/dashboard"
         android:title="@string/return_to_dashboard"
         android:icon="@drawable/house_icon"
         app:showAsAction="ifRoom" />
+
 </menu>

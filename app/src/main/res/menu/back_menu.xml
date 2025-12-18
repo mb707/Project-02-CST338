@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/dashboard"
-        android:title="@string/return_to_dashboard"
-        android:icon="@drawable/house_icon"
+        android:id="@+id/back"
+        android:title="@string/go_back"
+        android:icon="@drawable/back_arrow_icon"
         app:showAsAction="ifRoom" />
 </menu>

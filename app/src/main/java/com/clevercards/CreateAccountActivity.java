@@ -3,10 +3,13 @@ package com.clevercards;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -42,9 +45,7 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         repository = CleverCardsRepository.getRepository(getApplication());
         currentUserId = getIntent().getIntExtra(CREATE_USERS_USER_ID, -1);
-        createdByAdmin();
-
-
+        isAdmin = (currentUserId != -1);
 
         if (createdByAdmin()){
             binding.adminSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -124,6 +125,31 @@ public class CreateAccountActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.back_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem backItem = menu.findItem(R.id.back);
+        if (backItem != null) backItem.setVisible(isAdmin);
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.back) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void toastMaker(String message) {

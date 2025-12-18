@@ -26,7 +26,7 @@
             android:textAllCaps="false"
             android:gravity="center"
             android:textColor="#F6208EDB"
-            android:text="Front"
+            android:text="@string/front"
             android:textSize="24sp" />
 
         <TextView
@@ -37,7 +37,7 @@
             android:textStyle="bold"
             android:textColor="#F6208EDB"
             android:gravity="center"
-            android:text="Back"
+            android:text="@string/back"
             android:textAllCaps="false"
             android:textSize="20sp"
             android:visibility="gone" />
