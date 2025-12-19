@@ -101,14 +101,14 @@ public class CreateFlashcardActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.back_menu, menu);
+        getMenuInflater().inflate(R.menu.edit_user_dashboard_menu, menu);
         return true;
     }
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem backItem = menu.findItem(R.id.back);
-        if (backItem != null) backItem.setVisible(true);
+        MenuItem dashboardItem = menu.findItem(R.id.dashboard);
+        if (dashboardItem != null) dashboardItem.setVisible(true);
 
         return super.onPrepareOptionsMenu(menu);
     }
@@ -117,8 +117,8 @@ public class CreateFlashcardActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.back) {
-            finish();
+        if (id == R.id.dashboard) {
+            startActivity(MainActivity.mainActivityIntentFactory(this, userId));
             return true;
         }
         return super.onOptionsItemSelected(item);
