@@ -12,6 +12,12 @@ import com.clevercards.entities.Course;
 
 import java.util.List;
 
+
+/**
+ * @author Ashley Wozow
+ * created: 12/6/25
+ * CourseViewModel handles the logic necessary to utilze the recycler view on the back end side
+ */
 public class CourseViewModel extends AndroidViewModel {
 
     private CleverCardsRepository repository;

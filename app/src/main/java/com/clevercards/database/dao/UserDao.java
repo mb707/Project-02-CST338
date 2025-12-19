@@ -13,7 +13,7 @@ import com.clevercards.entities.User;
 import java.util.List;
 
 /**
- * Name: Morgan Beebe
+ * Name: Morgan Beebe and Ashley Wozow
  * Date: 2025-12-06
  * Explanation: interface for the user dao
  */
@@ -24,20 +24,19 @@ public interface UserDao {
     @Insert (onConflict = OnConflictStrategy.REPLACE)
     void insertUser(User... user);
 
+    // deletes a specific user
     @Delete
     void delete(User user);
 
+    // deletes all users
     @Query("DELETE from " + CleverCardsDatabase.USER_TABLE)
     void deleteAll();
 
-    //sign in to match username and password
-//    @Query("SELECT * FROM User WHERE username = :username AND password = :password LIMIT 1")
-//    User signin(String username, String password); THIS MAY NOT BE NEEDED
-
-    //gets a list of all users for admin (maybe include, or save for future)
+    //gets a list of all users for admin
     @Query("SELECT * from "+ CleverCardsDatabase.USER_TABLE + " WHERE username == :username")
     LiveData<User> getUsersByUserName(String username);
 
+    // gets a live data list of all users
     @Query("SELECT * FROM " + CleverCardsDatabase.USER_TABLE + " ORDER BY username")
     LiveData<List<User>> getAllUsers();
 

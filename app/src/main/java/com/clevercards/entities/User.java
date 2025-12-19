@@ -16,16 +16,15 @@ import java.util.Objects;
 @Entity(tableName = CleverCardsDatabase.USER_TABLE)
 public class User {
 
+    /** Fields */
     @PrimaryKey(autoGenerate = true)
     private int userId;
-
     private String username;
     private String password;
     private boolean isAdmin;
 
 
-    //constructor
-
+    /** Constructor */
     public User (String username, String password, boolean isAdmin){
         this.username=username;
         this.password=password;
@@ -33,9 +32,7 @@ public class User {
 
     }
 
-    //getters and setters
-
-
+    /** Getters and Setters */
     public int getUserId() {
         return userId;
     }
@@ -68,6 +65,7 @@ public class User {
         isAdmin = admin;
     }
 
+    /** Equals and HashCode */
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof User)) return false;

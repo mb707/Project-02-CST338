@@ -14,6 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.clevercards.R;
 import com.clevercards.entities.User;
 
+
+/**
+ * @author Ashley Wozow
+ * created: 12/6/25
+ * UserAdapter handles the logic necessary to utilze the recycler view
+ */
 public class UserAdapter extends ListAdapter<User, UserAdapter.UserViewHolder> {
 
     public interface OnUserClickListener {
@@ -48,6 +54,11 @@ public class UserAdapter extends ListAdapter<User, UserAdapter.UserViewHolder> {
         holder.bind(user, listener, selectedUserId);
     }
 
+    /**
+     * @author Ashley Wozow
+     * created: 12/6/25
+     * UserViewHolder handles the logic necessary to utilze the recycler view on the front end side
+     */
     static class UserViewHolder extends RecyclerView.ViewHolder {
         private final TextView username_TextView;
         private final TextView userRole_TextView;
@@ -87,7 +98,6 @@ public class UserAdapter extends ListAdapter<User, UserAdapter.UserViewHolder> {
 
         @Override
         public boolean areContentsTheSame(@NonNull User oldItem, @NonNull User newItem) {
-            // If you don't override equals in User, compare fields manually:
             return oldItem.equals(newItem);
         }
     }

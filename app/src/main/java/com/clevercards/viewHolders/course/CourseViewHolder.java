@@ -10,6 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.clevercards.R;
 import com.clevercards.entities.Course;
 
+
+/**
+ * @author Ashley Wozow
+ * created: 12/6/25
+ * CourseViewHolder handles the logic necessary to utilze the recycler view on the front end side
+ */
 public class CourseViewHolder extends RecyclerView.ViewHolder {
 
     private final Button courseButton;
