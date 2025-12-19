@@ -40,7 +40,6 @@ public class CreateAccountActivity extends AppCompatActivity {
 
         repository = CleverCardsRepository.getRepository(getApplication());
         currentUserId = getIntent().getIntExtra(CREATE_USERS_USER_ID, -1);
-        isAdmin = (currentUserId != -1);
 
         if (createdByAdmin()){
             binding.adminSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
