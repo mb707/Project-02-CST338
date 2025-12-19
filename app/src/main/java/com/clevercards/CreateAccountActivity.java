@@ -125,7 +125,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         MenuItem backItem = menu.findItem(R.id.back);
-        if (backItem != null) backItem.setVisible(isAdmin);
+        if (backItem != null) backItem.setVisible(currentUserId != -1);
 
         return super.onPrepareOptionsMenu(menu);
     }
