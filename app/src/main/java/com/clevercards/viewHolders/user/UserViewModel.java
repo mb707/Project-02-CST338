@@ -11,6 +11,12 @@ import com.clevercards.entities.User;
 
 import java.util.List;
 
+
+/**
+ * @author Ashley Wozow
+ * created: 12/6/25
+ * UserViewModel handles the logic necessary to utilze the recycler view on the back end side
+ */
 public class UserViewModel extends AndroidViewModel {
 
     private final CleverCardsRepository repository;
@@ -19,7 +25,6 @@ public class UserViewModel extends AndroidViewModel {
         super(application);
         repository = CleverCardsRepository.getRepository(application);
     }
-
     public LiveData<List<User>> getAllUsers() {
         return repository.getAllUsers();
     }
@@ -28,5 +33,4 @@ public class UserViewModel extends AndroidViewModel {
         repository.insertUser(users);
     }
 
-    // Add delete/update helpers later
 }

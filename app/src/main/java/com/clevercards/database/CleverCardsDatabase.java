@@ -51,8 +51,13 @@ public abstract class CleverCardsDatabase extends RoomDatabase{
     public abstract FlashcardDao flashcardDao();
 
     //Singleton Instance
-
     private static volatile CleverCardsDatabase INSTANCE;
+
+    /**
+     * This method allows us to retrieve the database instance through the singleton pattern
+     * @param context of our application
+     * @return the database instance
+     */
     public static CleverCardsDatabase getInstance(final Context context){
         if(INSTANCE == null){
             synchronized (CleverCardsDatabase.class){
@@ -66,6 +71,9 @@ public abstract class CleverCardsDatabase extends RoomDatabase{
         return INSTANCE;
     }
 
+    /**
+     * This static variable gives us the ability to add default values everytime we reload the app
+     */
     private static final RoomDatabase.Callback addDefaultValues = new RoomDatabase.Callback(){
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db){
@@ -82,25 +90,5 @@ public abstract class CleverCardsDatabase extends RoomDatabase{
             });
         }
     };
-
-    // private static final RoomDatabase.Callback addDefaultValues =
-    //            new RoomDatabase.Callback() {
-    //                @Override
-    //                public void onCreate(@NonNull SupportSQLiteDatabase dbSupport) {
-    //                    super.onCreate(dbSupport);
-    //
-    //                    databaseWriteExecutor.execute(() -> {
-    //                        // SAFETY CHECK — prevents black screen crash
-    //                        CleverCardsDatabase db = INSTANCE;
-    //                        if (db == null) return;
-    //
-    //                        UserDao dao = db.userDao();
-    //                        //dao.deleteAll();
-    //                        dao.insertUser(new User("admin1", "admin1", true));
-    //                        dao.insertUser(new User("user1", "user1", false));
-    //                    });
-    //                }
-    //            };
-
 
 }

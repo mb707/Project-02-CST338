@@ -4,14 +4,17 @@ package com.clevercards;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.clevercards.database.CleverCardsDatabase;
 import com.clevercards.database.repository.CleverCardsRepository;
+import com.clevercards.databinding.ActivityCreateFlashcardBinding;
 import com.clevercards.entities.Flashcard;
 
 /**
@@ -27,13 +30,16 @@ public class CreateFlashcardActivity extends AppCompatActivity {
 
     private CleverCardsRepository repository;
 
+    private ActivityCreateFlashcardBinding binding;
+
     private int courseId;
     private int userId;   // Passed from MainActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_flashcard);
+        binding = ActivityCreateFlashcardBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         repository = CleverCardsRepository.getRepository(getApplication());
 
@@ -51,25 +57,13 @@ public class CreateFlashcardActivity extends AppCompatActivity {
         frontTextEdit = findViewById(R.id.frontTextEdit);
         backTextEdit = findViewById(R.id.backTextEdit);
 
-        Button nextButton = findViewById(R.id.nextFlashcardButton);
-        Button dashboardButton = findViewById(R.id.dashboardButton);
-        Button signOutButton = findViewById(R.id.signOutBtn);
-
         // save flashcard and add new flashcard
-        nextButton.setOnClickListener(v -> saveFlashcard(false));
-
-        // go to dashboard WITHOUT saving or validating
-        dashboardButton.setOnClickListener(v -> {
-            Intent intent = MainActivity.mainActivityIntentFactory(this, userId);
-            startActivity(intent);
-            finish();
-        });
-
+        binding.createFlashcardButton.setOnClickListener(v -> saveFlashcard(false));
 
         // Sign out
-        signOutButton.setOnClickListener(v -> {
-            startActivity(SignInActivity.signInIntentFactory(this));
-            finish();
+        binding.signOutBtn.setOnClickListener(v -> {
+            userId = -1;
+            SignOutManager.showSignOutDialog(this, "userid");
         });
     }
 
@@ -103,6 +97,31 @@ public class CreateFlashcardActivity extends AppCompatActivity {
                 }
             });
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.edit_user_dashboard_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem dashboardItem = menu.findItem(R.id.dashboard);
+        if (dashboardItem != null) dashboardItem.setVisible(true);
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.dashboard) {
+            startActivity(MainActivity.mainActivityIntentFactory(this, userId));
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     // Intent Factory

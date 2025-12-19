@@ -15,77 +15,61 @@
 	<!-- TITLE -->
 	<TextView
 		android:id="@+id/createFlashcard_Title"
-		android:layout_width="0dp"
+		android:layout_width="325dp"
 		android:layout_height="60dp"
+		android:paddingTop="12dp"
 		android:gravity="center"
-		android:text="Create Flashcard"
+		android:text="@string/create_flashcard"
 		android:textColor="@color/black"
 		android:textSize="24sp"
-		android:textStyle="bold"
-		app:layout_constraintTop_toTopOf="parent"
-		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintBottom_toBottomOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
-		android:layout_marginTop="24dp"/>
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		app:layout_constraintVertical_bias="0.053" />
 
 	<!-- FRONT TEXT -->
 	<EditText
 		android:id="@+id/frontTextEdit"
 		android:layout_width="0dp"
-		android:layout_height="60dp"
-		android:layout_marginTop="48dp"
-		android:hint="Enter Front Text"
-		android:padding="16dp"
-		android:textSize="16sp"
-		app:layout_constraintTop_toBottomOf="@id/createFlashcard_Title"
-		app:layout_constraintStart_toStartOf="parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="124dp"
+		android:hint="@string/enter_front_text"
 		app:layout_constraintEnd_toEndOf="parent"
-		android:layout_marginStart="32dp"
-		android:layout_marginEnd="32dp"/>
+		app:layout_constraintHorizontal_bias="0.0"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/createFlashcard_Title" />
 
 
 	<!-- BACK TEXT -->
 	<EditText
 		android:id="@+id/backTextEdit"
 		android:layout_width="0dp"
-		android:layout_height="60dp"
-		android:layout_marginTop="24dp"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="28dp"
 		android:hint="@string/enter_back_text"
-		android:padding="16dp"
-		android:textSize="16sp"
-		app:layout_constraintTop_toBottomOf="@id/frontTextEdit"
-		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintEnd_toEndOf="parent"
-		android:layout_marginHorizontal="32dp" />
+		app:layout_constraintHorizontal_bias="0.0"
+		app:layout_constraintStart_toStartOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/frontTextEdit" />
 
-	<!-- NEXT BUTTON -->
+
 	<Button
-		android:id="@+id/nextFlashcardButton"
-		android:layout_width="140dp"
-		android:layout_height="75dp"
-		android:layout_marginTop="48dp"
+		android:id="@+id/createFlashcardButton"
+		android:layout_width="280dp"
+		android:layout_height="80dp"
+		android:layout_marginTop="128dp"
 		android:background="@drawable/blue_rounded_button"
-		android:text="@string/next"
+		android:text="@string/create"
 		android:textAllCaps="false"
 		android:textStyle="bold"
+		app:layout_constraintBottom_toTopOf="@+id/signOutBtn"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.492"
+		app:layout_constraintStart_toStartOf="parent"
 		app:layout_constraintTop_toBottomOf="@id/backTextEdit"
-		app:layout_constraintEnd_toEndOf="parent"
-		app:layout_constraintStart_toStartOf="parent" />
+		app:layout_constraintVertical_bias="0.035" />
 
-	<!-- DASHBOARD BUTTON -->
-	<Button
-		android:id="@+id/dashboardButton"
-		android:layout_width="140dp"
-		android:layout_height="75dp"
-		android:layout_marginTop="16dp"
-		android:background="@drawable/blue_rounded_button"
-		android:text="@string/dashboard"
-		android:textAllCaps="false"
-		android:textStyle="bold"
-		app:layout_constraintTop_toBottomOf="@id/nextFlashcardButton"
-		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintEnd_toEndOf="parent" />
-
-	<!-- SIGN OUT BUTTON -->
 	<Button
 		android:id="@+id/signOutBtn"
 		android:layout_width="280dp"
@@ -95,8 +79,9 @@
 		android:text="@string/sign_out"
 		android:textAllCaps="false"
 		android:textStyle="bold"
-		app:layout_constraintTop_toBottomOf="@id/dashboardButton"
+		app:layout_constraintEnd_toEndOf="parent"
+		app:layout_constraintHorizontal_bias="0.492"
 		app:layout_constraintStart_toStartOf="parent"
-		app:layout_constraintEnd_toEndOf="parent" />
+		app:layout_constraintTop_toBottomOf="@id/createFlashcardButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

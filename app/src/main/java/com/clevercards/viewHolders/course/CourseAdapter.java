@@ -8,6 +8,11 @@ import androidx.recyclerview.widget.ListAdapter;
 
 import com.clevercards.entities.Course;
 
+/**
+ * @author Ashley Wozow
+ * created: 12/6/25
+ * CourseAdapter handles the logic necessary to utilze the recycler view
+ */
 public class CourseAdapter extends ListAdapter<Course, CourseViewHolder> {
 
     public interface OnCourseClickListener {
@@ -38,7 +43,6 @@ public class CourseAdapter extends ListAdapter<Course, CourseViewHolder> {
 
         @Override
         public boolean areItemsTheSame(@NonNull Course oldItem, @NonNull Course newItem) {
-            // If you have a unique ID field, compare that instead
             return oldItem == newItem;
         }
 

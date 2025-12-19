@@ -23,14 +23,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:textAllCaps="false"
+            android:gravity="center"
+            android:textColor="#F6208EDB"
+            android:text="@string/front"
+            android:textSize="24sp" />
 
         <TextView
             android:id="@+id/backTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#F6208EDB"
+            android:gravity="center"
+            android:text="@string/back"
+            android:textAllCaps="false"
+            android:textSize="20sp"
             android:visibility="gone" />
 
     </LinearLayout>

@@ -65,7 +65,7 @@ public class EditUsersActivity extends AppCompatActivity {
 
         courseViewModel.getAllCoursesByUserId(signedInUserId)
                 .observe(this, courses -> {
-                    allCourses = courses;   // only admin’s courses
+                    allCourses = courses;
                 });
 
         setupRecyclerView();
@@ -80,7 +80,6 @@ public class EditUsersActivity extends AppCompatActivity {
         );
         binding.userRecyclerView.setAdapter(userAdapter);
 
-        // Observe LiveData from ViewModel
         userViewModel.getAllUsers().observe(this, users -> {
             userAdapter.submitList(users);
         });
@@ -129,7 +128,6 @@ public class EditUsersActivity extends AppCompatActivity {
                 .setMessage("Are you sure you want to delete " + selectedUser.getUsername() + "?")
                 .setPositiveButton("Delete", (dialog, which) -> {
                     repository.deleteUser(selectedUser);
-                    // Clear selection
                     selectedUser = null;
                     userAdapter.setSelectedUserId(-1);
                 })
@@ -183,7 +181,6 @@ public class EditUsersActivity extends AppCompatActivity {
                     }
 
                     Course chosenCourse = allCourses.get(selectedIndex[0]);
-
                     repository.assignCourseWithFlashcardsToUser(
                             chosenCourse.getCourseId(),
                             selectedUser.getUserId()
@@ -198,7 +195,6 @@ public class EditUsersActivity extends AppCompatActivity {
     }
 
     private void onUserClicked(User user) {
-        // Toggle selection: clicking the same user again unselects it
         if (selectedUser != null && selectedUser.getUserId() == user.getUserId()) {
             selectedUser = null;
             userAdapter.setSelectedUserId(-1);
