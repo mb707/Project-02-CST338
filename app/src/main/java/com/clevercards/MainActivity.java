@@ -1,7 +1,6 @@
 package com.clevercards;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,10 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
@@ -40,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
 
     static final String SAVED_INSTANCE_STATE_USERID_KEY = "com.clevercards.SAVED_INSTANCE_STATE_USERID_KEY";
 
-
     public static final String TAG = "DAC_CLEVERCARDS";
     private ActivityMainBinding binding;
     private TextView noCoursesTextView;
@@ -49,7 +45,6 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView courseRecyclerView;
     private CleverCardsRepository repository;
     private CourseViewModel courseViewModel;
-    private final List<Course> courseList = new ArrayList<>();
 
     private User user;
     private int signedInUserID = -1;
@@ -77,12 +72,9 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        // 2 columns grid
         GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         courseRecyclerView.setLayoutManager(layoutManager);
-        // Create adapter with empty list initially
         courseAdapter = new CourseAdapter(new CourseAdapter.CourseDiff(), course -> {
-            // Handle click on a course tile
             courseToFlashcards(course);
         });
         courseRecyclerView.setAdapter(courseAdapter);
@@ -113,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
         SignOutManager.showSignOutDialog(this,MAIN_ACTIVITY_USER_ID);
     }
 
-    //Sign in the user logic below
     private void signInUser(Bundle savedInstanceState) {
         // check shared preference for logged in user
         SharedPreferences sharedPreferences = getSharedPreferences(
@@ -172,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    // TODO: wire this to the flashcard activity
     private void courseToFlashcards(Course course) {
         Intent intent = ViewFlashcardsActivity.intentFactory(
                 this,

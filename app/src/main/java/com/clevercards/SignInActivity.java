@@ -16,7 +16,7 @@ import com.clevercards.databinding.ActivitySignInBinding;
 import com.clevercards.entities.User;
 
 /**
- * Author: France Zhang
+ * Author: France Zhang, Morgan Beebe, and Ashley Wozow
  * Created on: 12/6/2025
  * Description: SignInActivity class
  */
@@ -43,7 +43,6 @@ public class SignInActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.passwordEditText);
         signInButton = findViewById(R.id.signInButton);
 
-        // For Part 2: simple placeholder behavior
         signInButton.setOnClickListener(v -> {
             verifyUser();
         });

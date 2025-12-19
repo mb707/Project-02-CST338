@@ -8,6 +8,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 
+/**
+ * @author Ashley Wozow
+ * created: 12/13/25
+ * Sign out dialog and logic is handled in this class.
+ */
 public class SignOutManager {
     public static final int SIGNED_OUT = -1;
 

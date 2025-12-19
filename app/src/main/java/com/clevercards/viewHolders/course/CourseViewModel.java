@@ -6,7 +6,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
-import com.clevercards.database.dao.CourseDao;
 import com.clevercards.database.repository.CleverCardsRepository;
 import com.clevercards.entities.Course;
 

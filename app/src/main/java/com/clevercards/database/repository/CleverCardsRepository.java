@@ -127,7 +127,6 @@ public class CleverCardsRepository {
 
     public List<Course> getCourseById(int courseId){
         return courseDao.getCourseById(courseId);
-        //return Collections.singletonList(courseDao.getCourseById(courseId));
     }
 
     public LiveData<List<Course>> getAllCoursesByUserIdLiveData(int loginUserId){
@@ -136,30 +135,24 @@ public class CleverCardsRepository {
 
     public void assignCourseWithFlashcardsToUser(int sourceCourseId, int targetUserId) {
         CleverCardsDatabase.databaseWriteExecutor.execute(() -> {
-            // 1. Get the original course
             Course source = courseDao.getCourseByIdSync(sourceCourseId);
             if (source == null) {
                 return;
             }
 
-            // 2. Clone the course for the target user
             Course newCourse = new Course(
                     source.getCourseName(),
                     source.getNumberOfCards()
             );
             newCourse.setUserId(targetUserId);
 
-            // 3. Insert and get new courseId
             long newCourseIdLong = courseDao.insertSingleCourse(newCourse);
             int newCourseId = (int) newCourseIdLong;
             Log.d("CC_REPO", "Cloned course '" + source.getCourseName()
                     + "' for userId=" + targetUserId + " as courseId=" + newCourseId);
 
 
-            // 4. Get all flashcards of the source course
             List<Flashcard> originalCards = flashcardDao.getFlashcardsByCourse(sourceCourseId);
-
-            // 5. Clone each flashcard for the new course
             for (Flashcard card : originalCards) {
                 Flashcard newCard = new Flashcard(
                         newCourseId,

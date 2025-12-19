@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.clevercards.database.repository.CleverCardsRepository;
 import com.clevercards.databinding.ActivityCreateCourseBinding;
 import com.clevercards.entities.Course;
 import com.clevercards.viewHolders.course.CourseViewModel;
@@ -31,7 +30,6 @@ public class CreateCourseActivity extends AppCompatActivity {
     private EditText courseName;
     private EditText numberOfCards;
     private Button signOutbutton;
-    private Button backbutton;
     private Button nextbutton;
 
     private static final String CREATE_COURSE_USER_ID =
@@ -43,15 +41,12 @@ public class CreateCourseActivity extends AppCompatActivity {
     private Course course;
     private int signedInUserId = -1;
 
-    private CleverCardsRepository repository;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityCreateCourseBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        repository = CleverCardsRepository.getRepository(getApplication());
         signedInUserId = getIntent().getIntExtra(CREATE_COURSE_USER_ID, -1);
         courseViewModel = new ViewModelProvider(this).get(CourseViewModel.class);
 

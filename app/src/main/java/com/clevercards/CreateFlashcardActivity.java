@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -63,8 +62,8 @@ public class CreateFlashcardActivity extends AppCompatActivity {
 
         // Sign out
         binding.signOutBtn.setOnClickListener(v -> {
-            startActivity(SignInActivity.signInIntentFactory(this));
-            finish();
+            userId = -1;
+            SignOutManager.showSignOutDialog(this, "userid");
         });
     }
 

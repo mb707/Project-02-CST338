@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,10 +16,14 @@ import com.clevercards.database.repository.CleverCardsRepository;
 import com.clevercards.databinding.ActivityViewFlashcardsBinding;
 import com.clevercards.entities.Flashcard;
 import com.clevercards.viewHolders.flashcard.FlashcardListAdapter;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
+/**
+ * Name: Morgan Beebe
+ * Date: 2025-12-13
+ * Explanation: class to view the flashcards
+ */
 public class ViewFlashcardsActivity extends AppCompatActivity {
 
     private ActivityViewFlashcardsBinding binding;
@@ -50,7 +53,6 @@ public class ViewFlashcardsActivity extends AppCompatActivity {
             signedInUserId = -1;
             SignOutManager.showSignOutDialog(this, "userid");
         });
-
         loadFlashcards();
     }
 

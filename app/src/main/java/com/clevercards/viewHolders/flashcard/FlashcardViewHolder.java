@@ -31,7 +31,6 @@ public class FlashcardViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void bind(Flashcard flashcard) {
-        // RESET STATE (CRITICAL)
         showingFront = true;
 
         frontTextView.setText(flashcard.getFrontText());
