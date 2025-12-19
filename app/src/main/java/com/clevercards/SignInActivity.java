@@ -16,7 +16,7 @@ import com.clevercards.databinding.ActivitySignInBinding;
 import com.clevercards.entities.User;
 
 /**
- * Author: France Zhang, Morgan Beebe, and Ashley Wozow
+ * Author: Ashley Wozow started by France Zhang
  * Created on: 12/6/2025
  * Description: SignInActivity class
  */
@@ -53,8 +53,6 @@ public class SignInActivity extends AppCompatActivity {
                 createAccountActivity();
             }
         });
-
-
     }
 
     private void verifyUser() {
